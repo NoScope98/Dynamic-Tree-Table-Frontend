@@ -1,8 +1,4 @@
-import {
-  LOAD_ROOT_SUCCESS,
-  LOAD_CHILDREN,
-  LOAD_CHILDREN_SUCCESS,
-} from "../actions/node";
+import { LOAD_ROOT_SUCCESS, LOAD_CHILDREN_SUCCESS } from "../actions/node";
 
 // const initialState = [
 //   {

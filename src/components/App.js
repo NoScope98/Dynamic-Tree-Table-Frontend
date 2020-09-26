@@ -1,6 +1,8 @@
 import React from "react";
 import NodeList from "../containers/NodeList";
-//import Node from "./Node";
+import { DeleteIcon, AddIcon } from "../icons/icons";
+import Form from "../containers/Form";
+import Loader from "./Loader";
 
 const style = {
   loader: {
@@ -9,45 +11,52 @@ const style = {
   button: {
     width: "40px",
   },
+  table: {
+    minHeight: "300px",
+  },
 };
 
-function App({ onLoadRootButtonClick, isFetching }) {
-  //const classes = useStyles();
-
+const App = ({ onLoadRootButtonClick, isFetching, selectedNode }) => {
   return (
-    <div className="container mt-3">
+    <div className="container mt-3 px-5">
       <div>
         <button
           type="button"
-          class="btn btn-primary mr-3"
+          className="btn btn-primary mr-3"
           onClick={onLoadRootButtonClick}
         >
           Иерархия узлов
         </button>
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-secondary" style={style.button}>
-            +
+        <div className="btn-group" role="group" aria-label="Basic example">
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={style.button}
+            disabled={selectedNode ? (selectedNode.id ? false : true) : true}
+          >
+            <AddIcon />
           </button>
-          <button type="button" class="btn btn-secondary" style={style.button}>
-            -
+          <button
+            type="button"
+            className="btn btn-primary"
+            style={style.button}
+            disabled={selectedNode ? (selectedNode.id ? false : true) : true}
+          >
+            <DeleteIcon />
           </button>
         </div>
-        <div style={style.loader}>
-          {isFetching ? (
-            <div class="d-flex align-items-center">
-              Loading...
-              <div
-                class="spinner-border ml-auto"
-                role="status"
-                aria-hidden="true"
-              ></div>
-            </div>
-          ) : null}
+        <div style={style.loader}>{isFetching ? <Loader /> : null}</div>
+      </div>
+      <div className="row" style={style.table}>
+        <div className="col border p-3 rounded mr-1">
+          <NodeList />
+        </div>
+        <div className="col border p-3 rounded">
+          <Form />
         </div>
       </div>
-      <NodeList />
     </div>
   );
-}
+};
 
 export default App;

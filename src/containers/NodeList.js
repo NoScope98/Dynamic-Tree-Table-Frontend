@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import NodeList from "../components/NodeList";
-import { fetchChildren } from "../actions/node";
+import { fetchChildren, selectedNode } from "../actions/node";
 
 const mapStateToProps = (store) => {
   return {
@@ -12,6 +12,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onTreeItemClick: (id) => {
       dispatch(fetchChildren(id));
+    },
+    onSelected: (node) => {
+      dispatch(selectedNode(node));
     },
   };
 };

@@ -1,10 +1,12 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import { loadRoot, fetchRoot } from "../actions/node";
+import { fetchRoot } from "../actions/node";
 
 const mapStateToProps = (store) => {
   return {
     isFetching: store.properties.isFetching,
+    selectedNode: store.properties.selectedNode,
+    nodes: store.nodes,
   };
 };
 

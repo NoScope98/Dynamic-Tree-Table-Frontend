@@ -65,3 +65,35 @@ export function fetchChildren(id) {
       });
   };
 }
+
+export const SELECTED_NODE = "SELECTED_NODE";
+export function selectedNode(node) {
+  return {
+    type: SELECTED_NODE,
+    payload: node,
+  };
+}
+
+export const CHANGE_INPUT_NAME = "CHANGE_INPUT_NAME";
+export function changeInputName(value) {
+  return {
+    type: CHANGE_INPUT_NAME,
+    payload: value,
+  };
+}
+
+export const CHANGE_INPUT_IP = "CHANGE_INPUT_IP";
+export function changeInputIP(value) {
+  return {
+    type: CHANGE_INPUT_IP,
+    payload: value,
+  };
+}
+
+export const CHANGE_INPUT_PORT = "CHANGE_INPUT_PORT";
+export function changeInputPort(value) {
+  return {
+    type: CHANGE_INPUT_PORT,
+    payload: value,
+  };
+}

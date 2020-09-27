@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import NodeList from "../components/NodeList";
-import { fetchChildren, selectedNode } from "../actions/node";
+import { fetchChildren, selectedNode } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {

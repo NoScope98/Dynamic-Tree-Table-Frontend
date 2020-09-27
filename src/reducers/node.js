@@ -1,4 +1,10 @@
-import { LOAD_ROOT_SUCCESS, LOAD_CHILDREN_SUCCESS } from "../actions/node";
+import {
+  LOAD_ROOT_SUCCESS,
+  LOAD_CHILDREN_SUCCESS,
+  CREATE_CHILD_SUCCESS,
+  DELETE_NODE_SUCCESS,
+  EDIT_NODE_SUCCESS,
+} from "../actions/actions";
 
 // const initialState = [
 //   {
@@ -77,34 +83,55 @@ import { LOAD_ROOT_SUCCESS, LOAD_CHILDREN_SUCCESS } from "../actions/node";
 
 const initialState = {};
 
-// const initialState = [
-//   {
-//     id: 12345678,
-//     parentId: null,
-//     label: "My parent node",
-//     items: [
-//       {
-//         id: 87654321,
-//         label: "My file",
-//         parentId: 12345678,
-//       },
-//     ],
-//   },
-//   {
-//     id: 56789012,
-//     parentId: 12345678,
-//     label: "My child node",
-//     items: null,
-//   },
-// ];
-
-const addChildren = (obj, id, children) => {
+const addArrayChildren = (obj, id, children) => {
   if (obj.id === id) {
     obj.children = children;
   } else {
     // eslint-disable-next-line no-unused-expressions
     obj.children
-      ? obj.children.map((item) => addChildren(item, id, children))
+      ? obj.children.map((item) => addArrayChildren(item, id, children))
+      : obj;
+  }
+};
+
+const addChild = (obj, id, child) => {
+  if (obj.id === id) {
+    if (obj.children) {
+      obj.children.push(child);
+    } else {
+      obj.children = [child];
+    }
+  } else {
+    // eslint-disable-next-line no-unused-expressions
+    obj.children ? obj.children.map((item) => addChild(item, id, child)) : obj;
+  }
+};
+
+const deleteNode = (obj, id, parentId) => {
+  if (parentId === null) {
+    obj = {};
+    return;
+  }
+  if (obj.id === parentId) {
+    obj.children = obj.children.filter((node) => node.id !== id);
+    return;
+  } else {
+    // eslint-disable-next-line no-unused-expressions
+    obj.children
+      ? obj.children.map((item) => deleteNode(item, id, parentId))
+      : obj;
+  }
+};
+
+const editNode = (obj, id, newData) => {
+  if (obj.id === id) {
+    obj.name = newData.name;
+    obj.IP = newData.IP;
+    obj.port = newData.port;
+  } else {
+    // eslint-disable-next-line no-unused-expressions
+    obj.children
+      ? obj.children.map((item) => editNode(item, id, newData))
       : obj;
   }
 };
@@ -113,10 +140,31 @@ const nodeReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_ROOT_SUCCESS:
       return action.payload;
+
     case LOAD_CHILDREN_SUCCESS:
-      const newNodes = { ...state };
-      addChildren(newNodes, action.payload.id, action.payload.children);
-      return newNodes;
+      const newState = { ...state };
+      addArrayChildren(newState, action.payload.id, action.payload.children);
+      return newState;
+
+    case CREATE_CHILD_SUCCESS:
+      const newState2 = { ...state };
+      addChild(newState2, action.payload.parentId, action.payload.newChild);
+      return newState2;
+
+    case DELETE_NODE_SUCCESS:
+      const newState3 = { ...state };
+      deleteNode(newState3, action.payload.id, action.payload.parentId);
+      return newState3;
+
+    case EDIT_NODE_SUCCESS:
+      const newState4 = { ...state };
+      editNode(newState4, action.payload.id, {
+        name: action.payload.name,
+        IP: action.payload.IP,
+        port: action.payload.port,
+      });
+      return newState4;
+
     default:
       return state;
   }

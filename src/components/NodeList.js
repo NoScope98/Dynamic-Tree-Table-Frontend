@@ -14,7 +14,9 @@ const NodeList = ({ nodes, onTreeItemClick, onSelected }) => {
           nodeId={nodes.id}
           label={nodes.name}
           onIconClick={() => {
-            onTreeItemClick(nodes.id);
+            if (!nodes.children && nodes.hasChild) {
+              onTreeItemClick(nodes.id);
+            }
           }}
           onLabelClick={(event) => {
             event.preventDefault();

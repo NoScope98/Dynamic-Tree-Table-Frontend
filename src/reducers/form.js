@@ -1,9 +1,4 @@
-import {
-  SELECTED_NODE,
-  CHANGE_INPUT_NAME,
-  CHANGE_INPUT_IP,
-  CHANGE_INPUT_PORT,
-} from "../actions/node";
+import { SELECTED_NODE, CHANGE_INPUT } from "../actions/actions";
 
 const initialState = {
   name: "",
@@ -19,12 +14,17 @@ const form = (state = initialState, action) => {
         IP: action.payload.IP,
         port: action.payload.port,
       };
-    case CHANGE_INPUT_NAME:
-      return { ...state, name: action.payload };
-    case CHANGE_INPUT_IP:
-      return { ...state, IP: action.payload };
-    case CHANGE_INPUT_PORT:
-      return { ...state, port: action.payload };
+    case CHANGE_INPUT:
+      switch (action.payload.targetName) {
+        case "name":
+          return { ...state, name: action.payload.value };
+        case "IP":
+          return { ...state, IP: action.payload.value };
+        case "port":
+          return { ...state, port: action.payload.value };
+        default:
+          return state;
+      }
     default:
       return state;
   }

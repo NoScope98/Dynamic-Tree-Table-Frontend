@@ -2,38 +2,30 @@ import React from "react";
 
 const Form = ({
   selectedNode,
-  onInputNameChange,
-  onInputIPChange,
-  onInputPortChange,
+  onInputChange,
   inputNameValue,
   inputIPValue,
   inputPortValue,
+  onEditButtonClick,
 }) => {
   function handleChange(e) {
-    switch (e.target.name) {
-      case "name":
-        onInputNameChange(e.target.value);
-        break;
-      case "IP":
-        onInputIPChange(e.target.value);
-        break;
-      case "port":
-        onInputPortChange(e.target.value);
-        break;
-      default:
-        console.log("Nothing");
-    }
+    onInputChange(e.target.name, e.target.value);
   }
 
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        console.log(e.target.name.value);
+        const newData = {
+          name: e.target.name.value,
+          IP: e.target.IP.value,
+          port: e.target.port.value,
+        };
+        onEditButtonClick(selectedNode.id, newData);
       }}
     >
       <div className="d-flex flex-column px-5 mb-5">
-        <div className="text-center mb-3">Выбранный узел</div>
+        <div className="text-center mb-3">Узел</div>
         <div className="mb-2 d-flex justify-content-between px-5">
           <span>Имя:</span>
           <input
@@ -71,7 +63,7 @@ const Form = ({
           type="submit"
           disabled={selectedNode ? (selectedNode.id ? false : true) : true}
         >
-          Применить
+          Изменить выбранный узел
         </button>
       </div>
     </form>

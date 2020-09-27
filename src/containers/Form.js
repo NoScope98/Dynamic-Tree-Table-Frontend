@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import Form from "../components/Form";
-import {
-  changeInputIP,
-  changeInputName,
-  changeInputPort,
-} from "../actions/node";
+import { changeInput, modifyNode } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
@@ -17,14 +13,11 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onInputNameChange: (value) => {
-      dispatch(changeInputName(value));
+    onInputChange: (targetName, value) => {
+      dispatch(changeInput(targetName, value));
     },
-    onInputIPChange: (value) => {
-      dispatch(changeInputIP(value));
-    },
-    onInputPortChange: (value) => {
-      dispatch(changeInputPort(value));
+    onEditButtonClick: (id, newData) => {
+      dispatch(modifyNode(id, newData));
     },
   };
 };

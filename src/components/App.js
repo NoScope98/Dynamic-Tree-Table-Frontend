@@ -16,7 +16,14 @@ const style = {
   },
 };
 
-const App = ({ onLoadRootButtonClick, isFetching, selectedNode }) => {
+const App = ({
+  onLoadRootButtonClick,
+  isFetching,
+  selectedNode,
+  formData,
+  onAddChildButtonClick,
+  onDeleteNodeButtonClick,
+}) => {
   return (
     <div className="container mt-3 px-5">
       <div>
@@ -33,6 +40,22 @@ const App = ({ onLoadRootButtonClick, isFetching, selectedNode }) => {
             className="btn btn-primary"
             style={style.button}
             disabled={selectedNode ? (selectedNode.id ? false : true) : true}
+            onClick={() => {
+              const newChild = {
+                parentId: selectedNode.id,
+                name: formData.name,
+                IP: formData.IP,
+                port: formData.port,
+              };
+              onAddChildButtonClick(selectedNode.id, newChild);
+            }}
+            // onClick={() => {
+            //   console.log(
+            //     "parent :",
+            //     selectedNode.name,
+            //     `\nnew name : ${formData.name} \nnew IP : ${formData.IP} \nnew port : ${formData.port}`
+            //   );
+            // }}
           >
             <AddIcon />
           </button>
@@ -41,6 +64,9 @@ const App = ({ onLoadRootButtonClick, isFetching, selectedNode }) => {
             className="btn btn-primary"
             style={style.button}
             disabled={selectedNode ? (selectedNode.id ? false : true) : true}
+            onClick={() => {
+              onDeleteNodeButtonClick(selectedNode.id, selectedNode.parentId);
+            }}
           >
             <DeleteIcon />
           </button>

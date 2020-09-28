@@ -47,15 +47,16 @@ const App = ({
                 IP: formData.IP,
                 port: formData.port,
               };
-              onAddChildButtonClick(selectedNode.id, newChild);
+              if (
+                newChild.name === "" ||
+                newChild.IP === "" ||
+                newChild.port === ""
+              ) {
+                alert("Для создания нового узла заполните все поля!");
+              } else {
+                onAddChildButtonClick(selectedNode.id, newChild);
+              }
             }}
-            // onClick={() => {
-            //   console.log(
-            //     "parent :",
-            //     selectedNode.name,
-            //     `\nnew name : ${formData.name} \nnew IP : ${formData.IP} \nnew port : ${formData.port}`
-            //   );
-            // }}
           >
             <AddIcon />
           </button>

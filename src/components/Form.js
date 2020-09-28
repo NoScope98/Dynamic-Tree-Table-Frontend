@@ -34,6 +34,7 @@ const Form = ({
             value={inputNameValue}
             placeholder="Введите имя"
             onChange={handleChange}
+            required
           ></input>
         </div>
         <div className="mb-2 d-flex justify-content-between px-5">
@@ -44,6 +45,7 @@ const Form = ({
             value={inputIPValue}
             placeholder="Введите IP адрес"
             onChange={handleChange}
+            required
           ></input>
         </div>
         <div className="d-flex justify-content-between px-5">
@@ -54,6 +56,7 @@ const Form = ({
             value={inputPortValue}
             placeholder="Введите порт"
             onChange={handleChange}
+            required
           ></input>
         </div>
       </div>

@@ -3,7 +3,12 @@ function request(method, url, body = null) {
     return fetch(url, {
       method: method,
     }).then((response) => {
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        // return Promise.reject(new Error(response));
+        return Promise.reject(response.json());
+      }
     });
   } else {
     const headers = {
@@ -14,15 +19,19 @@ function request(method, url, body = null) {
       body: JSON.stringify(body),
       headers: headers,
     }).then((response) => {
-      return response.json();
+      if (response.ok) {
+        return response.json();
+      } else {
+        return Promise.reject(new Error(response.statusText));
+      }
     });
   }
 }
 
-export const LOAD_ROOT = "LOAD_ROOT";
-export function loadRoot() {
+export const LOAD_DATA = "LOAD_DATA";
+export function loadData() {
   return {
-    type: LOAD_ROOT,
+    type: LOAD_DATA,
   };
 }
 
@@ -44,7 +53,7 @@ export function loadRootError(error) {
 
 export function fetchRoot() {
   return function (dispatch) {
-    dispatch(loadRoot());
+    dispatch(loadData());
 
     return request("GET", "http://localhost:4000/api/nodes")
       .then((data) => {
@@ -53,13 +62,6 @@ export function fetchRoot() {
       .then((data) => {
         dispatch(loadRootSuccess(data));
       });
-  };
-}
-
-export const LOAD_CHILDREN = "LOAD_CHILDREN";
-export function loadChildren() {
-  return {
-    type: LOAD_CHILDREN,
   };
 }
 
@@ -76,7 +78,7 @@ export function loadChildrenSuccess(id, children) {
 
 export function fetchChildren(id) {
   return function (dispatch) {
-    dispatch(loadChildren());
+    dispatch(loadData());
 
     return request("GET", `http://localhost:4000/api/nodes/${id}`)
       .then((data) => {
@@ -107,15 +109,8 @@ export function changeInput(targetName, value) {
   };
 }
 
-export const CREATE_CHILD = "CREATE_CHILD";
-export function CreateChild() {
-  return {
-    type: CREATE_CHILD,
-  };
-}
-
 export const CREATE_CHILD_SUCCESS = "CREATE_CHILD_SUCCESS";
-export function CreateChildSuccess(parentId, newChild) {
+export function createChildSuccess(parentId, newChild) {
   return {
     type: CREATE_CHILD_SUCCESS,
     payload: {
@@ -125,24 +120,26 @@ export function CreateChildSuccess(parentId, newChild) {
   };
 }
 
-export function addChild(parentId, newChild) {
-  return function (dispatch) {
-    dispatch(CreateChild());
-
-    return request("POST", "http://localhost:4000/api/nodes", newChild)
-      .then((data) => {
-        return data;
-      })
-      .then((data) => {
-        dispatch(CreateChildSuccess(parentId, data));
-      });
+export const CREATE_CHILD_ERROR = "CREATE_CHILD_ERROR";
+export function createChildError() {
+  return {
+    type: CREATE_CHILD_ERROR,
   };
 }
 
-export const DELETE_NODE = "DELETE_NODE";
-export function deleteNode() {
-  return {
-    type: DELETE_NODE,
+export function addChild(parentId, newChild) {
+  return function (dispatch) {
+    dispatch(loadData());
+
+    return request("POST", "http://localhost:4000/api/nodes", newChild)
+      .then((data) => {
+        dispatch(createChildSuccess(parentId, data));
+      })
+      .catch((err) => {
+        alert("Такое имя уже существует!");
+        console.log("Error inside POST-request:", err);
+        dispatch(createChildError());
+      });
   };
 }
 
@@ -157,23 +154,30 @@ export function deleteNodeSuccess(id, parentId) {
   };
 }
 
-export function destroyNode(id, parentId) {
-  return function (dispatch) {
-    dispatch(deleteNode());
-
-    return request("DELETE", `http://localhost:4000/api/nodes/${id}`).then(
-      () => {
-        dispatch(deleteNodeSuccess(id, parentId));
-      }
-    );
+export const DELETE_ROOT = "DELETE_ROOT";
+export function deleteRoot() {
+  return {
+    type: DELETE_ROOT,
   };
 }
 
-export const EDIT_NODE = "EDIT_NODE";
-export function editNode() {
-  return {
-    type: EDIT_NODE,
-  };
+export function destroyNode(id, parentId) {
+  if (parentId !== null) {
+    return function (dispatch) {
+      dispatch(loadData());
+
+      return request("DELETE", `http://localhost:4000/api/nodes/${id}`).then(
+        () => {
+          dispatch(deleteNodeSuccess(id, parentId));
+        }
+      );
+    };
+  } else {
+    alert("Нельзя удалить корневой узел!");
+    return function (dispatch) {
+      dispatch(deleteRoot());
+    };
+  }
 }
 
 export const EDIT_NODE_SUCCESS = "EDIT_NODE_SUCCESS";
@@ -189,16 +193,26 @@ export function editNodeSuccess(id, newName, newIP, newPort) {
   };
 }
 
+export const EDIT_NODE_ERROR = "EDIT_NODE_ERROR";
+export function editNodeError() {
+  return {
+    type: EDIT_NODE_ERROR,
+  };
+}
+
 export function modifyNode(id, newData) {
   return function (dispatch) {
-    dispatch(editNode());
+    dispatch(loadData());
 
-    return request(
-      "PUT",
-      `http://localhost:4000/api/nodes/${id}`,
-      newData
-    ).then((data) => {
-      dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
-    });
+    return request("PUT", `http://localhost:4000/api/nodes/${id}`, newData)
+      .then((data) => {
+        console.log("Успешное выполнение PUT-запроса", data);
+        dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
+      })
+      .catch((err) => {
+        alert("Такое имя уже существует!");
+        console.log("Error inside PUT-request:", err);
+        dispatch(editNodeError());
+      });
   };
 }

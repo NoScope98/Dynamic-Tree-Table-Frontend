@@ -1,6 +1,11 @@
 import { connect } from "react-redux";
 import Form from "../components/Form";
-import { changeInput, modifyNode } from "../actions/actions";
+import {
+  changeInput,
+  modifyNode,
+  addChild,
+  destroyNode,
+} from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
@@ -8,6 +13,7 @@ const mapStateToProps = (store) => {
     inputNameValue: store.form.name,
     inputIPValue: store.form.IP,
     inputPortValue: store.form.port,
+    formData: store.form,
   };
 };
 
@@ -18,6 +24,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     onEditButtonClick: (id, newData) => {
       dispatch(modifyNode(id, newData));
+    },
+    onAddChildButtonClick: (parentId, newChild) => {
+      dispatch(addChild(parentId, newChild));
+    },
+    onDeleteNodeButtonClick: (id, parentId) => {
+      dispatch(destroyNode(id, parentId));
     },
   };
 };

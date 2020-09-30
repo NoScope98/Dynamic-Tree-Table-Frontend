@@ -29,7 +29,7 @@ const properties = (state = initialState, action) => {
       return { ...state, isFetching: false };
 
     case DELETE_NODE_SUCCESS:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, selectedNode: {} };
 
     case EDIT_NODE_SUCCESS:
       return { ...state, isFetching: false };

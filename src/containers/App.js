@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import { addChild, fetchRoot, destroyNode } from "../actions/actions";
+import { fetchRoot } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
@@ -15,12 +15,6 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onLoadRootButtonClick: () => {
       dispatch(fetchRoot());
-    },
-    onAddChildButtonClick: (parentId, newChild) => {
-      dispatch(addChild(parentId, newChild));
-    },
-    onDeleteNodeButtonClick: (id, parentId) => {
-      dispatch(destroyNode(id, parentId));
     },
   };
 };

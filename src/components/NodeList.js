@@ -11,10 +11,10 @@ const NodeList = ({ nodes, onTreeItemClick, onSelected }) => {
       <>
         <TreeItem
           key={nodes.id}
-          nodeId={nodes.id}
+          nodeId={String(nodes.id)}
           label={nodes.name}
           onIconClick={() => {
-            if (!nodes.children && nodes.hasChild) {
+            if (!nodes.children) {
               onTreeItemClick(nodes.id);
             }
           }}
@@ -23,7 +23,7 @@ const NodeList = ({ nodes, onTreeItemClick, onSelected }) => {
             onSelected(nodes);
           }}
         >
-          {nodes.hasChild ? <></> : null}
+          <></>
           {Array.isArray(nodes.children)
             ? nodes.children.map((node) => renderTree(node))
             : null}
@@ -38,6 +38,7 @@ const NodeList = ({ nodes, onTreeItemClick, onSelected }) => {
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpanded={["root"]}
           defaultExpandIcon={<ChevronRightIcon />}
+          key={nodes.id}
         >
           {renderTree(nodes)}
         </TreeView>

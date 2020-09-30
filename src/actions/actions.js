@@ -80,7 +80,7 @@ export function fetchChildren(id) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("GET", `http://localhost:4000/api/nodes/${id}`)
+    return request("GET", `http://localhost:4000/api/nodes/${id}/children`)
       .then((data) => {
         return data;
       })
@@ -206,7 +206,7 @@ export function modifyNode(id, newData) {
 
     return request("PUT", `http://localhost:4000/api/nodes/${id}`, newData)
       .then((data) => {
-        console.log("Успешное выполнение PUT-запроса", data);
+        //console.log("Успешное выполнение PUT-запроса", data);
         dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
       })
       .catch((err) => {

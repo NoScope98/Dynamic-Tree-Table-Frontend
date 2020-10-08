@@ -55,7 +55,7 @@ export function fetchRoot() {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("GET", "http://localhost:4000/api/nodes")
+    return request("GET", `${process.env.REACT_APP_SERVER_URL}/api/nodes`)
       .then((data) => {
         return data;
       })
@@ -80,7 +80,7 @@ export function fetchChildren(id) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("GET", `http://localhost:4000/api/nodes/${id}/children`)
+    return request("GET", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}/children`)
       .then((data) => {
         return data;
       })
@@ -131,7 +131,7 @@ export function addChild(parentId, newChild) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("POST", "http://localhost:4000/api/nodes", newChild)
+    return request("POST", `${process.env.REACT_APP_SERVER_URL}/api/nodes`, newChild)
       .then((data) => {
         dispatch(createChildSuccess(parentId, data));
       })
@@ -166,7 +166,7 @@ export function destroyNode(id, parentId) {
     return function (dispatch) {
       dispatch(loadData());
 
-      return request("DELETE", `http://localhost:4000/api/nodes/${id}`).then(
+      return request("DELETE", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`).then(
         () => {
           dispatch(deleteNodeSuccess(id, parentId));
         }
@@ -204,7 +204,7 @@ export function modifyNode(id, newData) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("PUT", `http://localhost:4000/api/nodes/${id}`, newData)
+    return request("PUT", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`, newData)
       .then((data) => {
         //console.log("Успешное выполнение PUT-запроса", data);
         dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));

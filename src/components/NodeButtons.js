@@ -8,14 +8,14 @@ const styles = {
   },
 };
 
-const NodeButtons = ({ onAddNodeClick, onDeleteNodeClick }) => {
+const NodeButtons = ({ onAddNodeButtonClick, onDeleteNodeButtonClick }) => {
   return (
     <>
       <button
         type="button"
         className="btn btn-secondary btn-sm"
         style={styles.button}
-        onClick={onAddNodeClick}
+        onClick={onAddNodeButtonClick}
       >
         <AddIcon />
       </button>
@@ -23,7 +23,7 @@ const NodeButtons = ({ onAddNodeClick, onDeleteNodeClick }) => {
         type="button"
         className="btn btn-secondary btn-sm ml-1"
         style={styles.button}
-        onClick={onDeleteNodeClick}
+        onClick={onDeleteNodeButtonClick}
       >
         <DeleteIcon />
       </button>

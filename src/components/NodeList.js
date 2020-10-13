@@ -21,6 +21,7 @@ const NodeList = ({
   onMouseEnterNode,
   onMouseLeaveNode,
   overNode,
+  onDeleteNodeButtonClick,
 }) => {
   const renderTree = (nodes) =>
     nodes.id ? (
@@ -54,8 +55,10 @@ const NodeList = ({
         </TreeItem>
         {overNode === nodes.name && (
           <NodeButtons
-            onAddNodeClick={() => console.log(nodes.name, "ADD")}
-            onDeleteNodeClick={() => console.log(nodes.name, "DELETE")}
+            onAddNodeButtonClick={() => console.log(nodes.name, "ADD")}
+            onDeleteNodeButtonClick={() =>
+              onDeleteNodeButtonClick(nodes.id, nodes.parentId)
+            }
           />
         )}
       </div>

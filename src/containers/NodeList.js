@@ -1,10 +1,16 @@
 import { connect } from "react-redux";
 import NodeList from "../components/NodeList";
-import { fetchChildren, selectedNode } from "../actions/actions";
+import {
+  fetchChildren,
+  mouseEnterNode,
+  mouseLeaveNode,
+  selectedNode,
+} from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
     nodes: store.nodes,
+    overNode: store.properties.overNode,
   };
 };
 
@@ -15,6 +21,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     onSelected: (node) => {
       dispatch(selectedNode(node));
+    },
+    onMouseEnterNode: (name) => {
+      dispatch(mouseEnterNode(name));
+    },
+    onMouseLeaveNode: () => {
+      dispatch(mouseLeaveNode());
     },
   };
 };

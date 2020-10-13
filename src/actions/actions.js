@@ -80,7 +80,10 @@ export function fetchChildren(id) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("GET", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}/children`)
+    return request(
+      "GET",
+      `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}/children`
+    )
       .then((data) => {
         return data;
       })
@@ -131,7 +134,11 @@ export function addChild(parentId, newChild) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("POST", `${process.env.REACT_APP_SERVER_URL}/api/nodes`, newChild)
+    return request(
+      "POST",
+      `${process.env.REACT_APP_SERVER_URL}/api/nodes`,
+      newChild
+    )
       .then((data) => {
         dispatch(createChildSuccess(parentId, data));
       })
@@ -166,11 +173,12 @@ export function destroyNode(id, parentId) {
     return function (dispatch) {
       dispatch(loadData());
 
-      return request("DELETE", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`).then(
-        () => {
-          dispatch(deleteNodeSuccess(id, parentId));
-        }
-      );
+      return request(
+        "DELETE",
+        `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`
+      ).then(() => {
+        dispatch(deleteNodeSuccess(id, parentId));
+      });
     };
   } else {
     alert("Нельзя удалить корневой узел!");
@@ -204,7 +212,11 @@ export function modifyNode(id, newData) {
   return function (dispatch) {
     dispatch(loadData());
 
-    return request("PUT", `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`, newData)
+    return request(
+      "PUT",
+      `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`,
+      newData
+    )
       .then((data) => {
         //console.log("Успешное выполнение PUT-запроса", data);
         dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
@@ -214,5 +226,20 @@ export function modifyNode(id, newData) {
         console.log("Error inside PUT-request:", err);
         dispatch(editNodeError());
       });
+  };
+}
+
+export const MOUSE_ENTER_NODE = "MOUSE_ENTER_NODE";
+export function mouseEnterNode(name) {
+  return {
+    type: MOUSE_ENTER_NODE,
+    payload: name,
+  };
+}
+
+export const MOUSE_LEAVE_NODE = "MOUSE_LEAVE_NODE";
+export function mouseLeaveNode() {
+  return {
+    type: MOUSE_LEAVE_NODE,
   };
 }

@@ -8,9 +8,11 @@ import {
   EDIT_NODE_SUCCESS,
   EDIT_NODE_ERROR,
   SELECTED_NODE,
+  MOUSE_ENTER_NODE,
+  MOUSE_LEAVE_NODE,
 } from "../actions/actions";
 
-const initialState = { isFetching: false };
+const initialState = { isFetching: false, overNode: null };
 
 const properties = (state = initialState, action) => {
   switch (action.type) {
@@ -38,6 +40,11 @@ const properties = (state = initialState, action) => {
 
     case SELECTED_NODE:
       return { ...state, selectedNode: action.payload };
+
+    case MOUSE_ENTER_NODE:
+      return { ...state, overNode: action.payload };
+    case MOUSE_LEAVE_NODE:
+      return { ...state, overNode: null };
 
     default:
       return state;

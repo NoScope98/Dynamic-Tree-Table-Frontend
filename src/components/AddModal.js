@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import Form from "./Form";
+import InputFields from "./InputFields";
 
 function AddModal({ close, isShown }) {
   //   const [isShown, setIsShown] = useState(false);
@@ -19,7 +19,7 @@ function AddModal({ close, isShown }) {
           <Modal.Title>Добавление узла</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form />
+          <InputFields />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={close}>

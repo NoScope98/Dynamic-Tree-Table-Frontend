@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import NodeButtons from "./NodeButtons";
+import AddModal from "./AddModal";
 
 import TreeView from "@material-ui/lab/TreeView";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -23,6 +24,8 @@ const NodeList = ({
   overNode,
   onDeleteNodeButtonClick,
 }) => {
+  const [isShownModal, setisShownModal] = useState(false);
+
   const renderTree = (nodes) =>
     nodes.id ? (
       <div
@@ -55,7 +58,9 @@ const NodeList = ({
         </TreeItem>
         {overNode === nodes.name && (
           <NodeButtons
-            onAddNodeButtonClick={() => console.log(nodes.name, "ADD")}
+            onAddNodeButtonClick={() => {
+              setisShownModal(true);
+            }}
             onDeleteNodeButtonClick={() =>
               onDeleteNodeButtonClick(nodes.id, nodes.parentId)
             }
@@ -78,6 +83,9 @@ const NodeList = ({
           {renderTree(nodes)}
         </TreeView>
       ) : null}
+      {isShownModal && (
+        <AddModal close={() => setisShownModal(false)} isShown={isShownModal} />
+      )}
     </>
   );
 };

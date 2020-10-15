@@ -25,8 +25,8 @@ const mapDispatchToProps = (dispatch) => {
     onEditButtonClick: (id, newData) => {
       dispatch(modifyNode(id, newData));
     },
-    onAddChildButtonClick: (parentId, newChild) => {
-      dispatch(addChild(parentId, newChild));
+    onAddChildButtonClick: (newChild) => {
+      dispatch(addChild(newChild));
     },
     onDeleteNodeButtonClick: (id, parentId) => {
       dispatch(destroyNode(id, parentId));

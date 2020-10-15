@@ -30,7 +30,7 @@ const Form = ({
     };
 
     if (operation === "add") {
-      onAddChildButtonClick(selectedNode.id, {
+      onAddChildButtonClick({
         ...data,
         parentId: selectedNode.id,
       });

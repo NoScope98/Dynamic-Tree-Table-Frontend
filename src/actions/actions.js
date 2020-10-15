@@ -130,7 +130,7 @@ export function createChildError() {
   };
 }
 
-export function addChild(parentId, newChild) {
+export function addChild(newChild) {
   return function (dispatch) {
     dispatch(loadData());
 
@@ -140,7 +140,7 @@ export function addChild(parentId, newChild) {
       newChild
     )
       .then((data) => {
-        dispatch(createChildSuccess(parentId, data));
+        dispatch(createChildSuccess(newChild.parentId, data));
       })
       .catch((err) => {
         alert("Такое имя уже существует!");

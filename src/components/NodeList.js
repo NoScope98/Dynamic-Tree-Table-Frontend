@@ -42,9 +42,7 @@ const NodeList = ({
           nodeId={String(nodes.id)}
           label={nodes.name}
           onIconClick={() => {
-            if (!nodes.children) {
-              onTreeItemClick(nodes.id);
-            }
+            onTreeItemClick(nodes.id);
           }}
           onLabelClick={(event) => {
             event.preventDefault();

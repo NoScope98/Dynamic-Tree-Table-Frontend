@@ -17,7 +17,7 @@ const NodeButtons = ({
     <>
       <button
         type="button"
-        className="btn btn-secondary btn-sm"
+        className="btn btn-primary btn-sm ml-1"
         style={styles.button}
         onClick={onAddNodeButtonClick}
       >
@@ -26,7 +26,7 @@ const NodeButtons = ({
       {node.parentId !== null && (
         <button
           type="button"
-          className="btn btn-secondary btn-sm ml-1"
+          className="btn btn-danger btn-sm ml-1"
           style={styles.button}
           onClick={onDeleteNodeButtonClick}
         >

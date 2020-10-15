@@ -13,8 +13,6 @@ const styles = {
   },
 };
 
-//import TreeDataTable from "cp-react-tree-table";
-
 const NodeList = ({
   nodes,
   onTreeItemClick,
@@ -23,8 +21,10 @@ const NodeList = ({
   onMouseLeaveNode,
   overNode,
   onDeleteNodeButtonClick,
+  onAddChildButtonClick,
 }) => {
   const [isShownModal, setisShownModal] = useState(false);
+  const [parentForModal, setParentForModal] = useState(null);
 
   const renderTree = (nodes) =>
     nodes.id ? (
@@ -57,6 +57,7 @@ const NodeList = ({
         {overNode === nodes.name && (
           <NodeButtons
             onAddNodeButtonClick={() => {
+              setParentForModal(nodes);
               setisShownModal(true);
             }}
             onDeleteNodeButtonClick={() =>
@@ -83,7 +84,12 @@ const NodeList = ({
         </TreeView>
       ) : null}
       {isShownModal && (
-        <AddModal close={() => setisShownModal(false)} isShown={isShownModal} />
+        <AddModal
+          close={() => setisShownModal(false)}
+          isShown={isShownModal}
+          onAddChildButtonClick={onAddChildButtonClick}
+          selectedParent={parentForModal}
+        />
       )}
     </>
   );

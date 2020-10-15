@@ -6,6 +6,7 @@ import {
   mouseLeaveNode,
   selectedNode,
   destroyNode,
+  addChild,
 } from "../actions/actions";
 
 const mapStateToProps = (store) => {
@@ -31,6 +32,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onDeleteNodeButtonClick: (id, parentId) => {
       dispatch(destroyNode(id, parentId));
+    },
+    onAddChildButtonClick: (newChild) => {
+      dispatch(addChild(newChild));
     },
   };
 };

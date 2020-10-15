@@ -3,17 +3,8 @@ import { Button, Modal } from "react-bootstrap";
 import InputFields from "./InputFields";
 
 function AddModal({ close, isShown }) {
-  //   const [isShown, setIsShown] = useState(false);
-
-  //   const close = () => setIsShown(false);
-  //   const show = () => setIsShown(true);
-
   return (
     <>
-      {/* <Button variant="primary" onClick={show}>
-        Launch demo modal
-      </Button> */}
-
       <Modal show={isShown} onHide={close}>
         <Modal.Header closeButton>
           <Modal.Title>Добавление узла</Modal.Title>

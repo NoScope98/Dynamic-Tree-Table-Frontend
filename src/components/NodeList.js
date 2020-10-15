@@ -64,6 +64,7 @@ const NodeList = ({
             onDeleteNodeButtonClick={() =>
               onDeleteNodeButtonClick(nodes.id, nodes.parentId)
             }
+            node={nodes}
           />
         )}
       </div>

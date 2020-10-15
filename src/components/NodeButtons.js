@@ -8,7 +8,11 @@ const styles = {
   },
 };
 
-const NodeButtons = ({ onAddNodeButtonClick, onDeleteNodeButtonClick }) => {
+const NodeButtons = ({
+  onAddNodeButtonClick,
+  onDeleteNodeButtonClick,
+  node,
+}) => {
   return (
     <>
       <button
@@ -19,14 +23,16 @@ const NodeButtons = ({ onAddNodeButtonClick, onDeleteNodeButtonClick }) => {
       >
         <AddIcon />
       </button>
-      <button
-        type="button"
-        className="btn btn-secondary btn-sm ml-1"
-        style={styles.button}
-        onClick={onDeleteNodeButtonClick}
-      >
-        <DeleteIcon />
-      </button>
+      {node.parentId !== null && (
+        <button
+          type="button"
+          className="btn btn-secondary btn-sm ml-1"
+          style={styles.button}
+          onClick={onDeleteNodeButtonClick}
+        >
+          <DeleteIcon />
+        </button>
+      )}
     </>
   );
 };

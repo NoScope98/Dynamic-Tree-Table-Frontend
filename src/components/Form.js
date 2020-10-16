@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import InputFields from "./InputFields";
 
 const Form = ({
@@ -12,9 +12,6 @@ const Form = ({
   onAddChildButtonClick,
   onDeleteNodeButtonClick,
 }) => {
-  // Состояние для обработки формы двумя кнопками
-  const [operation, setOperation] = useState("");
-
   function handleChange(e) {
     onInputChange(e.target.name, e.target.value);
   }
@@ -28,15 +25,7 @@ const Form = ({
       port: Number(e.target.port.value),
     };
 
-    if (operation === "add") {
-      onAddChildButtonClick({
-        ...data,
-        parentId: selectedNode.id,
-      });
-    }
-    if (operation === "update") {
-      onEditButtonClick(selectedNode.id, data);
-    }
+    onEditButtonClick(selectedNode.id, data);
   }
 
   return (
@@ -53,9 +42,6 @@ const Form = ({
 
       <div className="d-flex flex-column justify-content-center pt-4 px-4 mx-5">
         <button
-          onClick={() => {
-            setOperation("update");
-          }}
           className="btn btn-primary mb-2"
           type="submit"
           name="action"

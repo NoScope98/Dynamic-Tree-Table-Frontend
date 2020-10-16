@@ -22,7 +22,7 @@ function request(method, url, body = null) {
       if (response.ok) {
         return response.json();
       } else {
-        return Promise.reject(new Error(response.statusText));
+        return Promise.reject(response.json());
       }
     });
   }
@@ -124,14 +124,16 @@ export function createChildSuccess(parentId, newChild) {
 }
 
 export const CREATE_CHILD_ERROR = "CREATE_CHILD_ERROR";
-export function createChildError() {
+export function createChildError(error) {
   return {
     type: CREATE_CHILD_ERROR,
+    payload: error,
   };
 }
 
 export function addChild(newChild) {
   return function (dispatch) {
+    let error = "";
     dispatch(loadData());
 
     return request(
@@ -143,9 +145,16 @@ export function addChild(newChild) {
         dispatch(createChildSuccess(newChild.parentId, data));
       })
       .catch((err) => {
-        alert("Такое имя уже существует!");
-        console.log("Error inside POST-request:", err);
-        dispatch(createChildError());
+        // alert("Такое имя уже существует!");
+        // console.log(
+        //   "Error inside POST-request:",
+        //   err.then((data) => console.log(data.message))
+        // );
+        err.then((data) => {
+          error = data.message;
+          console.log(error);
+          dispatch(createChildError(error));
+        });
       });
   };
 }
@@ -202,14 +211,16 @@ export function editNodeSuccess(id, newName, newIP, newPort) {
 }
 
 export const EDIT_NODE_ERROR = "EDIT_NODE_ERROR";
-export function editNodeError() {
+export function editNodeError(error) {
   return {
     type: EDIT_NODE_ERROR,
+    payload: error,
   };
 }
 
 export function modifyNode(id, newData) {
   return function (dispatch) {
+    let error = "";
     dispatch(loadData());
 
     return request(
@@ -222,9 +233,15 @@ export function modifyNode(id, newData) {
         dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
       })
       .catch((err) => {
-        alert("Такое имя уже существует!");
-        console.log("Error inside PUT-request:", err);
-        dispatch(editNodeError());
+        // alert("Такое имя уже существует!");
+        // console.log("Error inside PUT-request:", err);
+        // dispatch(editNodeError());
+
+        err.then((data) => {
+          error = data.message;
+          console.log(error);
+          dispatch(editNodeError(error));
+        });
       });
   };
 }

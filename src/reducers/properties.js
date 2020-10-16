@@ -12,7 +12,7 @@ import {
   MOUSE_LEAVE_NODE,
 } from "../actions/actions";
 
-const initialState = { isFetching: false, overNode: null };
+const initialState = { isFetching: false, overNode: null, serverError: "" };
 
 const properties = (state = initialState, action) => {
   switch (action.type) {
@@ -28,7 +28,7 @@ const properties = (state = initialState, action) => {
     case CREATE_CHILD_SUCCESS:
       return { ...state, isFetching: false };
     case CREATE_CHILD_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, serverError: action.payload };
 
     case DELETE_NODE_SUCCESS:
       return { ...state, isFetching: false, selectedNode: {} };
@@ -36,7 +36,7 @@ const properties = (state = initialState, action) => {
     case EDIT_NODE_SUCCESS:
       return { ...state, isFetching: false };
     case EDIT_NODE_ERROR:
-      return { ...state, isFetching: false };
+      return { ...state, isFetching: false, serverError: action.payload };
 
     case SELECTED_NODE:
       return { ...state, selectedNode: action.payload };

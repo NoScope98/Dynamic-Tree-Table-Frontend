@@ -53,7 +53,11 @@ const properties = (state = initialState, action) => {
       };
 
     case SELECTED_NODE:
-      return { ...state, selectedNode: action.payload };
+      return {
+        ...state,
+        selectedNode: action.payload,
+        serverErrors: { ...state.serverErrors, edit: "" },
+      };
 
     case MOUSE_ENTER_NODE:
       return { ...state, overNode: action.payload };

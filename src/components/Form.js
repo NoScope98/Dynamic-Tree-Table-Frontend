@@ -32,7 +32,13 @@ const Form = ({
   return (
     <form onSubmit={onSubmit}>
       <div className="d-flex flex-column mb-5 mx-3">
-        <div className="text-center mb-3">Узел</div>
+        <div className="text-center mb-3">
+          {selectedNode
+            ? selectedNode.name
+              ? selectedNode.name
+              : "Узел"
+            : "Узел"}
+        </div>
         <InputFields
           handleChange={handleChange}
           inputNameValue={inputNameValue}

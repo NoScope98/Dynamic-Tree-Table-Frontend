@@ -9,6 +9,7 @@ function AddModal({
   selectedParent,
   serverError,
   onModalInputChange,
+  isAddFormValid,
 }) {
   function handleChange(e) {
     onModalInputChange(e.target.name, e.target.value);
@@ -29,7 +30,6 @@ function AddModal({
     });
 
     // if (!serverError) {
-    //   alert("ЗАКРЫВАЮ");
     //   close();
     // }
   }
@@ -42,18 +42,27 @@ function AddModal({
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Body>
-            {/* {serverError && (
-              <div className="d-flex justify-content-center mb-3 text-danger">
-                {serverError}
-              </div>
-            )} */}
-            <InputFields handleChange={handleChange} error={serverError} />
+            <InputFields
+              handleChange={handleChange}
+              error={serverError}
+              isValid={isAddFormValid}
+            />
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" variant="secondary" onClick={close}>
               Закрыть
             </Button>
-            <Button type="submit" variant="primary">
+            <Button
+              type="submit"
+              variant="primary"
+              disabled={
+                !(
+                  isAddFormValid.isNameValid &&
+                  isAddFormValid.isIPValid &&
+                  isAddFormValid.isPortValid
+                )
+              }
+            >
               Добавить
             </Button>
           </Modal.Footer>

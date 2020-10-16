@@ -15,6 +15,7 @@ const mapStateToProps = (store) => {
     nodes: store.nodes,
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
+    isAddFormValid: store.validation.addForm,
   };
 };
 

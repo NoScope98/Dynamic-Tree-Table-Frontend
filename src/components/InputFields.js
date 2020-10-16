@@ -6,62 +6,62 @@ const InputFields = ({
   inputIPValue,
   inputPortValue,
   error,
+  isValid,
 }) => {
-  // Регулярные выражения для валидации формы
-  const regExp = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-  const fullRegExpIP = `${regExp}.${regExp}.${regExp}.${regExp}`;
-  const RegExpPort =
-    "([0-9]{1,4}|[1-5][0-9]{4}|6[0-4][0-9]{3}|65[0-4][0-9]{2}|655[0-2][0-9]|6553[0-5])";
-
   return (
     <>
       <div className="mb-2">
-        <label for="inputName" class="form-label">
+        <label htmlFor="inputName" className="form-label">
           Имя
         </label>
         <input
-          className={`form-control ${error ? "is-invalid" : ""}`}
+          className={`form-control ${
+            error || !isValid.isNameValid ? "is-invalid" : ""
+          }`}
           id="inputName"
           type="text"
           name="name"
           value={inputNameValue}
           placeholder="Введите имя"
           onChange={handleChange}
-          required
         ></input>
-        <div class="invalid-feedback">{error}</div>
+        <div className="invalid-feedback">
+          {error ? error : "Неккоректный формат имени"}
+        </div>
       </div>
       <div className="mb-2">
-        <label for="inputIP" class="form-label">
+        <label htmlFor="inputIP" className="form-label">
           IP-адрес
         </label>
         <input
-          className="form-control"
+          className={`form-control ${!isValid.isIPValid ? "is-invalid" : ""}`}
           id="inputIP"
           type="text"
           name="IP"
           value={inputIPValue}
           placeholder="0.0.0.0"
-          pattern={fullRegExpIP}
-          onChange={handleChange}
-          required
+          onChange={(e) => {
+            handleChange(e);
+          }}
         ></input>
+        <div className="invalid-feedback">Некорректный формат IP-адреса</div>
       </div>
       <div className="">
-        <label for="inputPort" class="form-label">
+        <label htmlFor="inputPort" className="form-label">
           Порт
         </label>
         <input
-          className="form-control"
+          className={`form-control ${!isValid.isPortValid ? "is-invalid" : ""}`}
           id="inputPort"
           type="text"
           name="port"
           value={inputPortValue}
           placeholder="0000"
-          pattern={RegExpPort}
-          onChange={handleChange}
-          required
+          onChange={(e) => {
+            handleChange(e);
+          }}
         ></input>
+        <div className="invalid-feedback">Некорректный формат номера порта</div>
       </div>
     </>
   );

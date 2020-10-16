@@ -15,6 +15,7 @@ const mapStateToProps = (store) => {
     inputPortValue: store.form.port,
     formData: store.form,
     serverError: store.properties.serverErrors.edit,
+    isEditFormValid: store.validation.editForm,
   };
 };
 

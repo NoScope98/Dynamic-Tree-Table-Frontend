@@ -8,10 +8,8 @@ const Form = ({
   inputIPValue,
   inputPortValue,
   onEditButtonClick,
-  formData,
-  onAddChildButtonClick,
-  onDeleteNodeButtonClick,
   serverError,
+  isEditFormValid,
 }) => {
   function handleChange(e) {
     onInputChange(e.target.name, e.target.value);
@@ -45,6 +43,7 @@ const Form = ({
           inputIPValue={inputIPValue}
           inputPortValue={inputPortValue}
           error={serverError}
+          isValid={isEditFormValid}
         />
       </div>
 
@@ -54,7 +53,14 @@ const Form = ({
           type="submit"
           name="action"
           value="updateChild"
-          disabled={selectedNode ? (selectedNode.id ? false : true) : true}
+          disabled={
+            (selectedNode ? (selectedNode.id ? false : true) : true) ||
+            !(
+              isEditFormValid.isNameValid &&
+              isEditFormValid.isIPValid &&
+              isEditFormValid.isPortValid
+            )
+          }
         >
           Изменить выбранный узел
         </button>

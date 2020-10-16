@@ -10,9 +10,15 @@ import {
   SELECTED_NODE,
   MOUSE_ENTER_NODE,
   MOUSE_LEAVE_NODE,
+  CHANGE_INPUT,
+  CHANGE_MODAL_INPUT,
 } from "../actions/actions";
 
-const initialState = { isFetching: false, overNode: null, serverError: "" };
+const initialState = {
+  isFetching: false,
+  overNode: null,
+  serverErrors: { add: "", edit: "" },
+};
 
 const properties = (state = initialState, action) => {
   switch (action.type) {
@@ -28,7 +34,11 @@ const properties = (state = initialState, action) => {
     case CREATE_CHILD_SUCCESS:
       return { ...state, isFetching: false };
     case CREATE_CHILD_ERROR:
-      return { ...state, isFetching: false, serverError: action.payload };
+      return {
+        ...state,
+        isFetching: false,
+        serverErrors: { ...state.serverErrors, add: action.payload },
+      };
 
     case DELETE_NODE_SUCCESS:
       return { ...state, isFetching: false, selectedNode: {} };
@@ -36,7 +46,11 @@ const properties = (state = initialState, action) => {
     case EDIT_NODE_SUCCESS:
       return { ...state, isFetching: false };
     case EDIT_NODE_ERROR:
-      return { ...state, isFetching: false, serverError: action.payload };
+      return {
+        ...state,
+        isFetching: false,
+        serverErrors: { ...state.serverErrors, edit: action.payload },
+      };
 
     case SELECTED_NODE:
       return { ...state, selectedNode: action.payload };
@@ -45,6 +59,16 @@ const properties = (state = initialState, action) => {
       return { ...state, overNode: action.payload };
     case MOUSE_LEAVE_NODE:
       return { ...state, overNode: null };
+
+    case CHANGE_INPUT:
+      if (action.payload.targetName === "name") {
+        return { ...state, serverErrors: { ...state.serverErrors, edit: "" } };
+      } else return state;
+
+    case CHANGE_MODAL_INPUT:
+      if (action.payload.targetName === "name") {
+        return { ...state, serverErrors: { ...state.serverErrors, add: "" } };
+      } else return state;
 
     default:
       return state;

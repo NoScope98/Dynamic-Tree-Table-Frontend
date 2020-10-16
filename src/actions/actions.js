@@ -260,3 +260,14 @@ export function mouseLeaveNode() {
     type: MOUSE_LEAVE_NODE,
   };
 }
+
+export const CHANGE_MODAL_INPUT = "CHANGE_MODAL_INPUT";
+export function changeModalInput(targetName, value) {
+  return {
+    type: CHANGE_MODAL_INPUT,
+    payload: {
+      targetName: targetName,
+      value: value,
+    },
+  };
+}

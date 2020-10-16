@@ -11,6 +11,7 @@ const Form = ({
   formData,
   onAddChildButtonClick,
   onDeleteNodeButtonClick,
+  serverError,
 }) => {
   function handleChange(e) {
     onInputChange(e.target.name, e.target.value);
@@ -32,6 +33,11 @@ const Form = ({
     <form onSubmit={onSubmit}>
       <div className="d-flex flex-column mb-5 mx-3">
         <div className="text-center mb-3">Узел</div>
+        {serverError && (
+          <div className="d-flex justify-content-center mb-3 text-danger">
+            {serverError}
+          </div>
+        )}
         <InputFields
           handleChange={handleChange}
           inputNameValue={inputNameValue}

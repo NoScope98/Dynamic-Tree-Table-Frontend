@@ -2,7 +2,18 @@ import React from "react";
 import { Button, Modal } from "react-bootstrap";
 import InputFields from "./InputFields";
 
-function AddModal({ close, isShown, onAddChildButtonClick, selectedParent }) {
+function AddModal({
+  close,
+  isShown,
+  onAddChildButtonClick,
+  selectedParent,
+  serverError,
+  onModalInputChange,
+}) {
+  function handleChange(e) {
+    onModalInputChange(e.target.name, e.target.value);
+  }
+
   function onSubmit(e) {
     e.preventDefault();
 
@@ -17,7 +28,10 @@ function AddModal({ close, isShown, onAddChildButtonClick, selectedParent }) {
       parentId: selectedParent.id,
     });
 
-    close();
+    // if (!serverError) {
+    //   alert("ЗАКРЫВАЮ");
+    //   close();
+    // }
   }
 
   return (
@@ -28,7 +42,12 @@ function AddModal({ close, isShown, onAddChildButtonClick, selectedParent }) {
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Body>
-            <InputFields />
+            {serverError && (
+              <div className="d-flex justify-content-center mb-3 text-danger">
+                {serverError}
+              </div>
+            )}
+            <InputFields handleChange={handleChange} />
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" variant="secondary" onClick={close}>

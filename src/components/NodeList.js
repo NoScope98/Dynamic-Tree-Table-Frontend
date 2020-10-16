@@ -22,6 +22,8 @@ const NodeList = ({
   overNode,
   onDeleteNodeButtonClick,
   onAddChildButtonClick,
+  serverError,
+  onModalInputChange,
 }) => {
   const [isShownModal, setisShownModal] = useState(false);
   const [parentForModal, setParentForModal] = useState(null);
@@ -89,6 +91,8 @@ const NodeList = ({
           isShown={isShownModal}
           onAddChildButtonClick={onAddChildButtonClick}
           selectedParent={parentForModal}
+          serverError={serverError}
+          onModalInputChange={onModalInputChange}
         />
       )}
     </>

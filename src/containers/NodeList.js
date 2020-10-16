@@ -7,12 +7,14 @@ import {
   selectedNode,
   destroyNode,
   addChild,
+  changeModalInput,
 } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
     nodes: store.nodes,
     overNode: store.properties.overNode,
+    serverError: store.properties.serverErrors.add,
   };
 };
 
@@ -35,6 +37,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onAddChildButtonClick: (newChild) => {
       dispatch(addChild(newChild));
+    },
+    onModalInputChange: (targetName, value) => {
+      dispatch(changeModalInput(targetName, value));
     },
   };
 };

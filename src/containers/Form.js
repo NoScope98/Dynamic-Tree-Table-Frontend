@@ -14,6 +14,7 @@ const mapStateToProps = (store) => {
     inputIPValue: store.form.IP,
     inputPortValue: store.form.port,
     formData: store.form,
+    serverError: store.properties.serverErrors.edit,
   };
 };
 

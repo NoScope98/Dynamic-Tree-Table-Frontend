@@ -42,12 +42,12 @@ function AddModal({
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Body>
-            {serverError && (
+            {/* {serverError && (
               <div className="d-flex justify-content-center mb-3 text-danger">
                 {serverError}
               </div>
-            )}
-            <InputFields handleChange={handleChange} />
+            )} */}
+            <InputFields handleChange={handleChange} error={serverError} />
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" variant="secondary" onClick={close}>

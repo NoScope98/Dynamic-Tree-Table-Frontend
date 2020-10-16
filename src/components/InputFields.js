@@ -5,6 +5,7 @@ const InputFields = ({
   inputNameValue,
   inputIPValue,
   inputPortValue,
+  error,
 }) => {
   // Регулярные выражения для валидации формы
   const regExp = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -14,9 +15,13 @@ const InputFields = ({
 
   return (
     <>
-      <div className="mb-2 d-flex justify-content-between px-5">
-        <span>Имя:</span>
+      <div className="mb-2">
+        <label for="inputName" class="form-label">
+          Имя
+        </label>
         <input
+          className={`form-control ${error ? "is-invalid" : ""}`}
+          id="inputName"
           type="text"
           name="name"
           value={inputNameValue}
@@ -24,10 +29,15 @@ const InputFields = ({
           onChange={handleChange}
           required
         ></input>
+        <div class="invalid-feedback">{error}</div>
       </div>
-      <div className="mb-2 d-flex justify-content-between px-5">
-        <span>IP:</span>
+      <div className="mb-2">
+        <label for="inputIP" class="form-label">
+          IP-адрес
+        </label>
         <input
+          className="form-control"
+          id="inputIP"
           type="text"
           name="IP"
           value={inputIPValue}
@@ -37,9 +47,13 @@ const InputFields = ({
           required
         ></input>
       </div>
-      <div className="d-flex justify-content-between px-5">
-        <span>Порт:</span>
+      <div className="">
+        <label for="inputPort" class="form-label">
+          Порт
+        </label>
         <input
+          className="form-control"
+          id="inputPort"
           type="text"
           name="port"
           value={inputPortValue}

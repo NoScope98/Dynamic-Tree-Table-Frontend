@@ -33,20 +33,16 @@ const Form = ({
     <form onSubmit={onSubmit}>
       <div className="d-flex flex-column mb-5 mx-3">
         <div className="text-center mb-3">Узел</div>
-        {serverError && (
-          <div className="d-flex justify-content-center mb-3 text-danger">
-            {serverError}
-          </div>
-        )}
         <InputFields
           handleChange={handleChange}
           inputNameValue={inputNameValue}
           inputIPValue={inputIPValue}
           inputPortValue={inputPortValue}
+          error={serverError}
         />
       </div>
 
-      <div className="d-flex flex-column justify-content-center pt-4 px-4 mx-5">
+      <div className="d-flex justify-content-center">
         <button
           className="btn btn-primary mb-2"
           type="submit"

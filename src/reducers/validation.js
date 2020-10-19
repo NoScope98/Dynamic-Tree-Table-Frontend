@@ -1,4 +1,8 @@
-import { CHANGE_INPUT, CHANGE_MODAL_INPUT } from "../actions/actions";
+import {
+  CHANGE_INPUT,
+  CHANGE_MODAL_INPUT,
+  SELECTED_NODE,
+} from "../actions/actions";
 
 const initialState = {
   editForm: {
@@ -90,6 +94,16 @@ const validation = (state = initialState, action) => {
       }
     default:
       return state;
+    case SELECTED_NODE:
+      return {
+        ...state,
+        editForm: {
+          ...state.editForm,
+          isNameValid: true,
+          isIPValid: true,
+          isPortValid: true,
+        },
+      };
   }
 };
 

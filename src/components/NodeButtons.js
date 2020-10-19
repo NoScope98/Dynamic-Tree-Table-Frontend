@@ -3,8 +3,9 @@ import { AddIcon, DeleteIcon } from "../icons/icons";
 
 const styles = {
   button: {
-    height: "23px",
-    width: "23px",
+    padding: "0px 5px 5px",
+    maxHeight: "23px",
+    maxWidth: "23px",
   },
 };
 

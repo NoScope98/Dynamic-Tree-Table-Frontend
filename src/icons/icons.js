@@ -5,7 +5,7 @@ export function DeleteIcon() {
     <svg
       width="1em"
       height="1em"
-      viewBox="2 0 16 16"
+      viewBox="1 0 16 16"
       className="bi bi-trash-fill"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@ export function AddIcon() {
     <svg
       width="1.5em"
       height="1.5em"
-      viewBox="3 0 16 16"
+      viewBox="4 0 16 16"
       className="bi bi-plus"
       fill="currentColor"
       xmlns="http://www.w3.org/2000/svg"

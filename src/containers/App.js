@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import { fetchRoot, showTree, showTable } from "../actions/actions";
+import { fetchRoot, showTree, fetchAllNodes } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
@@ -21,7 +21,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(showTree());
     },
     onShowTableButtonClick: () => {
-      dispatch(showTable());
+      dispatch(fetchAllNodes());
     },
   };
 };

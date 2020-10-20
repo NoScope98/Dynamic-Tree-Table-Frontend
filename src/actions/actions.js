@@ -287,8 +287,30 @@ export function showTree() {
 }
 
 export const SHOW_TABLE = "SHOW_TABLE";
-export function showTable() {
+export function showTable(data) {
   return {
     type: SHOW_TABLE,
+    payload: data,
+  };
+}
+
+// export const LOAD_ALL_NODES_SUCCESS = "LOAD_ALL_NODES_SUCCESS";
+// export function loadAllNodesSuccess(data) {
+//   return {
+//     type: LOAD_ALL_NODES_SUCCESS,
+//     payload: data,
+//   };
+// }
+
+export function fetchAllNodes() {
+  return function (dispatch) {
+    dispatch(loadData());
+
+    return request(
+      "GET",
+      `${process.env.REACT_APP_SERVER_URL}/api/nodes/all`
+    ).then((data) => {
+      dispatch(showTable(data));
+    });
   };
 }

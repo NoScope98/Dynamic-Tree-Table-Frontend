@@ -32,7 +32,7 @@ const App = ({
   return (
     <div className="container mt-3 px-5">
       <div>
-        <div class="btn-group" role="group">
+        <div className="btn-group" role="group">
           <button
             type="button"
             className="btn btn-primary"
@@ -42,7 +42,7 @@ const App = ({
           </button>
           <button
             type="button"
-            class="btn btn-primary"
+            className="btn btn-primary"
             onClick={onShowTableButtonClick}
           >
             Таблица

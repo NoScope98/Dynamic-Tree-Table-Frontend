@@ -80,7 +80,7 @@ const properties = (state = initialState, action) => {
     case SHOW_TREE:
       return { ...state, viewTree: true };
     case SHOW_TABLE:
-      return { ...state, viewTree: false };
+      return { ...state, viewTree: false, isFetching: false };
 
     default:
       return state;

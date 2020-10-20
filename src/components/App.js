@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import NodeList from "../containers/NodeList";
 import Form from "../containers/Form";
 import Loader from "./Loader";
-import NodeTable from "./NodeTable";
+import NodeTable from "../containers/NodeTable";
 
 const style = {
   loader: {
@@ -50,14 +50,18 @@ const App = ({
         </div>
         <div style={style.loader}>{isFetching ? <Loader /> : null}</div>
       </div>
-      <div className="row" style={style.table}>
-        <div className="col border p-3 rounded mr-1">
-          {viewTree ? <NodeList /> : <NodeTable />}
+      {viewTree ? (
+        <div className="row" style={style.table}>
+          <div className="col border p-3 rounded mr-1">
+            <NodeList />
+          </div>
+          <div className="col border p-3 rounded">
+            <Form />
+          </div>
         </div>
-        <div className="col border p-3 rounded">
-          <Form />
-        </div>
-      </div>
+      ) : (
+        <NodeTable />
+      )}
     </div>
   );
 };

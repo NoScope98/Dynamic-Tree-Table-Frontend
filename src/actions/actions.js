@@ -271,3 +271,10 @@ export function changeModalInput(targetName, value) {
     },
   };
 }
+
+export const RESET_MODAL_INPUT = "RESET_MODAL_INPUT";
+export function resetModalInput() {
+  return {
+    type: RESET_MODAL_INPUT,
+  };
+}

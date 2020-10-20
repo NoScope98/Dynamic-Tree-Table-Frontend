@@ -10,10 +10,10 @@ import {
 const mapStateToProps = (store) => {
   return {
     selectedNode: store.properties.selectedNode,
-    inputNameValue: store.form.name,
-    inputIPValue: store.form.IP,
-    inputPortValue: store.form.port,
-    formData: store.form,
+    // inputNameValue: store.form.editForm.name,
+    // inputIPValue: store.form.editForm.IP,
+    // inputPortValue: store.form.editForm.port,
+    formData: store.form.editForm,
     serverError: store.properties.serverErrors.edit,
     isEditFormValid: store.validation.editForm,
   };

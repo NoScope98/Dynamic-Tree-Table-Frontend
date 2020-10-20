@@ -10,6 +10,7 @@ function AddModal({
   serverError,
   onModalInputChange,
   isAddFormValid,
+  formData,
 }) {
   function handleChange(e) {
     onModalInputChange(e.target.name, e.target.value);
@@ -46,6 +47,9 @@ function AddModal({
               handleChange={handleChange}
               error={serverError}
               isValid={isAddFormValid}
+              inputNameValue={formData.name}
+              inputIPValue={formData.IP}
+              inputPortValu={formData.port}
             />
           </Modal.Body>
           <Modal.Footer>

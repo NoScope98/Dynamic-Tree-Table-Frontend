@@ -8,6 +8,7 @@ import {
   destroyNode,
   addChild,
   changeModalInput,
+  resetModalInput,
 } from "../actions/actions";
 
 const mapStateToProps = (store) => {
@@ -16,6 +17,7 @@ const mapStateToProps = (store) => {
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
     isAddFormValid: store.validation.addForm,
+    formData: store.form.addForm,
   };
 };
 
@@ -41,6 +43,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onModalInputChange: (targetName, value) => {
       dispatch(changeModalInput(targetName, value));
+    },
+    onCloseModal: () => {
+      dispatch(resetModalInput());
     },
   };
 };

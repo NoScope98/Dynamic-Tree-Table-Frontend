@@ -4,12 +4,10 @@ import InputFields from "./InputFields";
 const Form = ({
   selectedNode,
   onInputChange,
-  inputNameValue,
-  inputIPValue,
-  inputPortValue,
   onEditButtonClick,
   serverError,
   isEditFormValid,
+  formData,
 }) => {
   function handleChange(e) {
     onInputChange(e.target.name, e.target.value);
@@ -39,9 +37,9 @@ const Form = ({
         </div>
         <InputFields
           handleChange={handleChange}
-          inputNameValue={inputNameValue}
-          inputIPValue={inputIPValue}
-          inputPortValue={inputPortValue}
+          inputNameValue={formData.name}
+          inputIPValue={formData.IP}
+          inputPortValue={formData.port}
           error={serverError}
           isValid={isEditFormValid}
         />

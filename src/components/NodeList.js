@@ -24,7 +24,9 @@ const NodeList = ({
   onAddChildButtonClick,
   serverError,
   onModalInputChange,
-  isAddFormValid
+  isAddFormValid,
+  onCloseModal,
+  formData,
 }) => {
   const [isShownModal, setisShownModal] = useState(false);
   const [parentForModal, setParentForModal] = useState(null);
@@ -88,13 +90,19 @@ const NodeList = ({
       ) : null}
       {isShownModal && (
         <AddModal
-          close={() => setisShownModal(false)}
+          close={() => {
+            setisShownModal(false);
+            if (!serverError) {
+              onCloseModal();
+            }
+          }}
           isShown={isShownModal}
           onAddChildButtonClick={onAddChildButtonClick}
           selectedParent={parentForModal}
           serverError={serverError}
           onModalInputChange={onModalInputChange}
           isAddFormValid={isAddFormValid}
+          formData={formData}
         />
       )}
     </>

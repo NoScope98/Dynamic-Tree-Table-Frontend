@@ -12,12 +12,15 @@ import {
   MOUSE_LEAVE_NODE,
   CHANGE_INPUT,
   CHANGE_MODAL_INPUT,
+  SHOW_TREE,
+  SHOW_TABLE,
 } from "../actions/actions";
 
 const initialState = {
   isFetching: false,
   overNode: null,
   serverErrors: { add: "", edit: "" },
+  viewTree: true,
 };
 
 const properties = (state = initialState, action) => {
@@ -73,6 +76,11 @@ const properties = (state = initialState, action) => {
       if (action.payload.targetName === "name") {
         return { ...state, serverErrors: { ...state.serverErrors, add: "" } };
       } else return state;
+
+    case SHOW_TREE:
+      return { ...state, viewTree: true };
+    case SHOW_TABLE:
+      return { ...state, viewTree: false };
 
     default:
       return state;

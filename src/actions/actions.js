@@ -278,3 +278,17 @@ export function resetModalInput() {
     type: RESET_MODAL_INPUT,
   };
 }
+
+export const SHOW_TREE = "SHOW_TREE";
+export function showTree() {
+  return {
+    type: SHOW_TREE,
+  };
+}
+
+export const SHOW_TABLE = "SHOW_TABLE";
+export function showTable() {
+  return {
+    type: SHOW_TABLE,
+  };
+}

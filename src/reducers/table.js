@@ -27,7 +27,11 @@ const sortNodes = (key, asc, initialData) => {
 const table = (state = initialState, action) => {
   switch (action.type) {
     case SHOW_TABLE:
-      return { ...state, data: action.payload };
+      return {
+        ...state,
+        data: action.payload,
+        sortedKey: { name: "", asc: false },
+      };
     case SORT_NODES:
       return {
         ...state,

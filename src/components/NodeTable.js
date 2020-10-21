@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { SortAscIcon, SortDescIcon } from "../icons/icons";
 
-const NodeTable = ({ tableData, onShowTableButtonClick }) => {
+const NodeTable = ({
+  tableData,
+  onShowTableButtonClick,
+  onTitleColumnClick,
+  sortedKey,
+}) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
 
   useEffect(() => {
@@ -17,8 +23,24 @@ const NodeTable = ({ tableData, onShowTableButtonClick }) => {
           <tr>
             {Object.keys(tableData[0]).map((keyObject, index) => {
               return (
-                <th scope="col" key={index}>
-                  {keyObject}
+                <th
+                  className="border"
+                  scope="col"
+                  key={index}
+                  onClick={() => {
+                    onTitleColumnClick(keyObject);
+                  }}
+                >
+                  <div className="d-flex justify-content-start">
+                    <div className="mr-1">{keyObject}</div>
+                    {sortedKey.name === keyObject ? (
+                      sortedKey.asc ? (
+                        <SortAscIcon />
+                      ) : (
+                        <SortDescIcon />
+                      )
+                    ) : null}
+                  </div>
                 </th>
               );
             })}

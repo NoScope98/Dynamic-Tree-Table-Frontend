@@ -294,14 +294,6 @@ export function showTable(data) {
   };
 }
 
-// export const LOAD_ALL_NODES_SUCCESS = "LOAD_ALL_NODES_SUCCESS";
-// export function loadAllNodesSuccess(data) {
-//   return {
-//     type: LOAD_ALL_NODES_SUCCESS,
-//     payload: data,
-//   };
-// }
-
 export function fetchAllNodes() {
   return function (dispatch) {
     dispatch(loadData());
@@ -312,5 +304,13 @@ export function fetchAllNodes() {
     ).then((data) => {
       dispatch(showTable(data));
     });
+  };
+}
+
+export const SORT_NODES = "SORT_NODES";
+export function sortNodes(key) {
+  return {
+    type: SORT_NODES,
+    payload: key,
   };
 }

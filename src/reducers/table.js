@@ -1,7 +1,7 @@
 import { SHOW_TABLE } from "../actions/actions";
 
 const initialState = {
-  data: ["example", "example", "example"],
+  data: [],
 };
 
 const table = (state = initialState, action) => {

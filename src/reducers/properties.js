@@ -20,7 +20,7 @@ const initialState = {
   isFetching: false,
   overNode: null,
   serverErrors: { add: "", edit: "" },
-  viewTree: true,
+  viewTree: false,
 };
 
 const properties = (state = initialState, action) => {

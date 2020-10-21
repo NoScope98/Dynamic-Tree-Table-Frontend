@@ -60,7 +60,7 @@ const App = ({
           </div>
         </div>
       ) : (
-        <NodeTable />
+        <NodeTable onShowTableButtonClick={onShowTableButtonClick} />
       )}
     </div>
   );

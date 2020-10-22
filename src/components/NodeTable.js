@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { SortAscIcon, SortDescIcon, FilterIcon } from "../icons/icons";
+import {
+  SortAscIcon,
+  SortDescIcon,
+  FilterIcon,
+  CancelIcon,
+} from "../icons/icons";
 import FilterModal from "./FilterModal";
 import TableBody from "./TableBody";
 
@@ -18,6 +23,7 @@ const NodeTable = ({
   onConfirmFilterButtonClick,
   filteredData,
   onResetFilterButtonClick,
+  filteredColumn,
 }) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isShownModal, setisShownModal] = useState(false);
@@ -64,16 +70,26 @@ const NodeTable = ({
                         </div>
                       </div>
                       <div>
-                        <button
-                          type="button"
-                          className="btn btn-outline-secondary btn-sm"
-                          onClick={() => {
-                            setisShownModal(true);
-                            setFilterColumn(keyObject);
-                          }}
-                        >
-                          <FilterIcon />
-                        </button>
+                        {filteredColumn === keyObject ? (
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={onResetFilterButtonClick}
+                          >
+                            <CancelIcon />
+                          </button>
+                        ) : (
+                          <button
+                            type="button"
+                            className="btn btn-outline-secondary btn-sm"
+                            onClick={() => {
+                              setisShownModal(true);
+                              setFilterColumn(keyObject);
+                            }}
+                          >
+                            <FilterIcon />
+                          </button>
+                        )}
                       </div>
                     </div>
                   </th>
@@ -87,7 +103,7 @@ const NodeTable = ({
             <TableBody data={tableData} />
           )}
         </table>
-        {filteredData.length ? (
+        {/* {filteredData.length ? (
           <button
             type="button"
             className="btn btn-primary"
@@ -95,7 +111,7 @@ const NodeTable = ({
           >
             Сбросить фильтр
           </button>
-        ) : null}
+        ) : null} */}
         {isShownModal && (
           <FilterModal
             close={() => {

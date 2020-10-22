@@ -7,6 +7,7 @@ const mapStateToProps = (store) => {
     tableData: store.table.data,
     sortedKey: store.table.sortedKey,
     filteredData: store.table.filteredData,
+    filteredColumn: store.table.filteredColumn,
   };
 };
 

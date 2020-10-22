@@ -12,6 +12,7 @@ const initialState = {
     name: "",
     asc: false,
   },
+  filteredColumn: "",
 };
 
 const sortNodes = (key, asc, data) => {
@@ -84,12 +85,14 @@ const table = (state = initialState, action) => {
           state.data
         ),
         sortedKey: { name: "", asc: false },
+        filteredColumn: action.payload.key,
       };
     case RESET_FILTER:
       return {
         ...state,
         filteredData: [],
         sortedKey: { name: "", asc: false },
+        filteredColumn: "",
       };
     default:
       return state;

@@ -12,8 +12,8 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTitleColumnClick: (key) => {
-      dispatch(sortNodes(key));
+    onTitleColumnClick: (key, isFilteredData) => {
+      dispatch(sortNodes(key, isFilteredData));
     },
     onConfirmFilterButtonClick: (key, value) => {
       dispatch(filterNodes(key, value));

@@ -14,8 +14,8 @@ const initialState = {
   },
 };
 
-const sortNodes = (key, asc, initialData) => {
-  const sortedArray = initialData.concat();
+const sortNodes = (key, asc, data) => {
+  const sortedArray = data.concat();
   sortedArray.sort((a, b) => {
     if (typeof a[key] === "string") {
       return asc
@@ -51,15 +51,30 @@ const table = (state = initialState, action) => {
         sortedKey: { name: "", asc: false },
       };
     case SORT_NODES:
-      return {
-        ...state,
-        data: sortNodes(action.payload, !state.sortedKey.asc, state.data),
-        sortedKey: {
-          ...state.sortedKey,
-          name: action.payload,
-          asc: !state.sortedKey.asc,
-        },
-      };
+      if (!action.payload.isFilteredData)
+        return {
+          ...state,
+          data: sortNodes(action.payload.key, !state.sortedKey.asc, state.data),
+          sortedKey: {
+            ...state.sortedKey,
+            name: action.payload.key,
+            asc: !state.sortedKey.asc,
+          },
+        };
+      else
+        return {
+          ...state,
+          filteredData: sortNodes(
+            action.payload.key,
+            !state.sortedKey.asc,
+            state.filteredData
+          ),
+          sortedKey: {
+            ...state.sortedKey,
+            name: action.payload.key,
+            asc: !state.sortedKey.asc,
+          },
+        };
     case FILTER_NODES:
       return {
         ...state,
@@ -68,9 +83,14 @@ const table = (state = initialState, action) => {
           action.payload.value,
           state.data
         ),
+        sortedKey: { name: "", asc: false },
       };
     case RESET_FILTER:
-      return { ...state, filteredData: [] };
+      return {
+        ...state,
+        filteredData: [],
+        sortedKey: { name: "", asc: false },
+      };
     default:
       return state;
   }

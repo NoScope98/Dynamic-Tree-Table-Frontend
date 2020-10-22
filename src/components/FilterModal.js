@@ -13,8 +13,10 @@ const FilterModal = ({
   const onSubmit = (e) => {
     e.preventDefault();
 
-    onConfirmFilterButtonClick(filterColumn, inputFilter);
-    close();
+    if (isValid) {
+      onConfirmFilterButtonClick(filterColumn, inputFilter);
+      close();
+    }
   };
 
   //   const onChange = async (e) => {
@@ -50,8 +52,7 @@ const FilterModal = ({
               value={inputFilter}
               onChange={(e) => {
                 setInputFilter(e.target.value);
-                // console.log(inputFilter);
-                checkValidity();
+                setIsValid(true);
               }}
             ></input>
             <div className="invalid-feedback">Заполните поле</div>
@@ -60,7 +61,7 @@ const FilterModal = ({
             <Button type="button" variant="secondary" onClick={close}>
               Закрыть
             </Button>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" onClick={checkValidity}>
               Отфильтровать
             </Button>
           </Modal.Footer>

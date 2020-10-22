@@ -35,14 +35,14 @@ const App = ({
         <div className="btn-group" role="group">
           <button
             type="button"
-            className="btn btn-primary"
+            className={`btn btn-primary ${viewTree ? "active" : ""}`}
             onClick={onShowTreeButtonClick}
           >
             Иерархия
           </button>
           <button
             type="button"
-            className="btn btn-primary"
+            className={`btn btn-primary ${viewTree ? "" : "active"}`}
             onClick={onShowTableButtonClick}
           >
             Таблица

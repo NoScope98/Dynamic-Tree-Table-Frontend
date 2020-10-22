@@ -42,7 +42,10 @@ const NodeTable = ({
                       <div
                         className="position-relative pr-4"
                         onClick={() => {
-                          onTitleColumnClick(keyObject);
+                          onTitleColumnClick(
+                            keyObject,
+                            Boolean(filteredData.length)
+                          );
                         }}
                       >
                         {keyObject}

@@ -285,10 +285,13 @@ export function fetchAllNodes() {
 }
 
 export const SORT_NODES = "SORT_NODES";
-export function sortNodes(key) {
+export function sortNodes(key, isFilteredData) {
   return {
     type: SORT_NODES,
-    payload: key,
+    payload: {
+      key,
+      isFilteredData,
+    },
   };
 }
 

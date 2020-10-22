@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SortAscIcon, SortDescIcon, FilterIcon } from "../icons/icons";
 import FilterModal from "./FilterModal";
+import TableBody from "./TableBody";
 
 const styles = {
   filterIcon: {
@@ -80,35 +81,11 @@ const NodeTable = ({
               })}
             </tr>
           </thead>
-          <tbody>
-            {filteredData.length
-              ? filteredData.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      {Object.keys(item).map((keyObject, index) => {
-                        return (
-                          <td key={index}>
-                            {item[keyObject] ? item[keyObject] : "-"}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })
-              : tableData.map((item, index) => {
-                  return (
-                    <tr key={index}>
-                      {Object.keys(item).map((keyObject, index) => {
-                        return (
-                          <td key={index}>
-                            {item[keyObject] ? item[keyObject] : "-"}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                })}
-          </tbody>
+          {filteredData.length ? (
+            <TableBody data={filteredData} />
+          ) : (
+            <TableBody data={tableData} />
+          )}
         </table>
         {filteredData.length ? (
           <button

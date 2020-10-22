@@ -314,3 +314,21 @@ export function sortNodes(key) {
     payload: key,
   };
 }
+
+export const FILTER_NODES = "FILTER_NODES";
+export function filterNodes(key, value) {
+  return {
+    type: FILTER_NODES,
+    payload: {
+      key,
+      value,
+    },
+  };
+}
+
+export const RESET_FILTER = "RESET_FILTER";
+export function resetFilter() {
+  return {
+    type: RESET_FILTER,
+  };
+}

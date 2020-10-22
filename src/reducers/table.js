@@ -1,16 +1,20 @@
-import { SHOW_TABLE, SORT_NODES } from "../actions/actions";
+import {
+  SHOW_TABLE,
+  SORT_NODES,
+  FILTER_NODES,
+  RESET_FILTER,
+} from "../actions/actions";
 
 const initialState = {
   data: [],
+  filteredData: [],
   sortedKey: {
     name: "",
     asc: false,
   },
 };
 
-// Необходимо скопировать стор
 const sortNodes = (key, asc, initialData) => {
-  // const sortedArray = { initialData };
   const sortedArray = initialData.concat();
   sortedArray.sort((a, b) => {
     if (typeof a[key] === "string") {
@@ -22,6 +26,20 @@ const sortNodes = (key, asc, initialData) => {
     }
   });
   return sortedArray;
+};
+
+const filterNodes = (key, value, initialData) => {
+  const filteredArray = initialData.filter((objectNode) => {
+    if (!objectNode[key]) return false;
+    if (typeof objectNode[key] === "number") {
+      if (objectNode[key] === Number(value)) return true;
+      else return false;
+    } else {
+      if (objectNode[key].includes(value)) return true;
+      else return false;
+    }
+  });
+  return filteredArray;
 };
 
 const table = (state = initialState, action) => {
@@ -42,6 +60,17 @@ const table = (state = initialState, action) => {
           asc: !state.sortedKey.asc,
         },
       };
+    case FILTER_NODES:
+      return {
+        ...state,
+        filteredData: filterNodes(
+          action.payload.key,
+          action.payload.value,
+          state.data
+        ),
+      };
+    case RESET_FILTER:
+      return { ...state, filteredData: [] };
     default:
       return state;
   }

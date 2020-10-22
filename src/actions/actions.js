@@ -1,7 +1,8 @@
-async function request(method, url, body = null) {
+async function request(method, route, body = null) {
   let response;
+  const urlHost = `http://${window.location.hostname}:4000`;
   if (method === "GET" || method === "DELETE") {
-    response = await fetch(url, {
+    response = await fetch(`${urlHost}${route}`, {
       method: method,
     });
     if (response.ok) {
@@ -13,7 +14,7 @@ async function request(method, url, body = null) {
     const headers = {
       "Content-Type": "application/json",
     };
-    response = await fetch(url, {
+    response = await fetch(`${urlHost}${route}`, {
       method: method,
       body: JSON.stringify(body),
       headers: headers,
@@ -53,10 +54,7 @@ export function fetchRoot() {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request(
-      "GET",
-      `${process.env.REACT_APP_SERVER_URL}/api/nodes`
-    );
+    const data = await request("GET", `/api/nodes`);
     dispatch(loadRootSuccess(data));
   };
 }
@@ -76,10 +74,7 @@ export function fetchChildren(id) {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request(
-      "GET",
-      `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}/children`
-    );
+    const data = await request("GET", `/api/nodes/${id}/children`);
     dispatch(loadChildrenSuccess(id, data));
   };
 }
@@ -128,11 +123,7 @@ export function addChild(newChild) {
     dispatch(loadData());
 
     try {
-      const data = await request(
-        "POST",
-        `${process.env.REACT_APP_SERVER_URL}/api/nodes`,
-        newChild
-      );
+      const data = await request("POST", `/api/nodes`, newChild);
       dispatch(createChildSuccess(newChild.parentId, data));
     } catch (err) {
       err.then((res) => {
@@ -167,10 +158,7 @@ export function destroyNode(id, parentId) {
     return async function (dispatch) {
       dispatch(loadData());
 
-      await request(
-        "DELETE",
-        `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`
-      );
+      await request("DELETE", `/api/nodes/${id}`);
       dispatch(deleteNodeSuccess(id, parentId));
     };
   } else {
@@ -208,11 +196,7 @@ export function modifyNode(id, newData) {
     dispatch(loadData());
 
     try {
-      await request(
-        "PUT",
-        `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`,
-        newData
-      );
+      await request("PUT", `/api/nodes/${id}`, newData);
       dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
     } catch (err) {
       err.then((res) => {
@@ -276,10 +260,7 @@ export function fetchAllNodes() {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request(
-      "GET",
-      `${process.env.REACT_APP_SERVER_URL}/api/nodes/all`
-    );
+    const data = await request("GET", `/api/nodes/all`);
     dispatch(showTable(data));
   };
 }

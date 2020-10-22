@@ -1,30 +1,28 @@
-function request(method, url, body = null) {
+async function request(method, url, body = null) {
+  let response;
   if (method === "GET" || method === "DELETE") {
-    return fetch(url, {
+    response = await fetch(url, {
       method: method,
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        // return Promise.reject(new Error(response));
-        return Promise.reject(response.json());
-      }
     });
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(response.json());
+    }
   } else {
     const headers = {
       "Content-Type": "application/json",
     };
-    return fetch(url, {
+    response = await fetch(url, {
       method: method,
       body: JSON.stringify(body),
       headers: headers,
-    }).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        return Promise.reject(response.json());
-      }
     });
+    if (response.ok) {
+      return response.json();
+    } else {
+      return Promise.reject(response.json());
+    }
   }
 }
 
@@ -52,16 +50,14 @@ export function loadRootError(error) {
 }
 
 export function fetchRoot() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch(loadData());
 
-    return request("GET", `${process.env.REACT_APP_SERVER_URL}/api/nodes`)
-      .then((data) => {
-        return data;
-      })
-      .then((data) => {
-        dispatch(loadRootSuccess(data));
-      });
+    const data = await request(
+      "GET",
+      `${process.env.REACT_APP_SERVER_URL}/api/nodes`
+    );
+    dispatch(loadRootSuccess(data));
   };
 }
 
@@ -77,19 +73,14 @@ export function loadChildrenSuccess(id, children) {
 }
 
 export function fetchChildren(id) {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch(loadData());
 
-    return request(
+    const data = await request(
       "GET",
       `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}/children`
-    )
-      .then((data) => {
-        return data;
-      })
-      .then((data) => {
-        dispatch(loadChildrenSuccess(id, data));
-      });
+    );
+    dispatch(loadChildrenSuccess(id, data));
   };
 }
 
@@ -132,30 +123,24 @@ export function createChildError(error) {
 }
 
 export function addChild(newChild) {
-  return function (dispatch) {
+  return async function (dispatch) {
     let error = "";
     dispatch(loadData());
 
-    return request(
-      "POST",
-      `${process.env.REACT_APP_SERVER_URL}/api/nodes`,
-      newChild
-    )
-      .then((data) => {
-        dispatch(createChildSuccess(newChild.parentId, data));
-      })
-      .catch((err) => {
-        // alert("Такое имя уже существует!");
-        // console.log(
-        //   "Error inside POST-request:",
-        //   err.then((data) => console.log(data.message))
-        // );
-        err.then((data) => {
-          error = data.message;
-          console.log(error);
-          dispatch(createChildError(error));
-        });
+    try {
+      const data = await request(
+        "POST",
+        `${process.env.REACT_APP_SERVER_URL}/api/nodes`,
+        newChild
+      );
+      dispatch(createChildSuccess(newChild.parentId, data));
+    } catch (err) {
+      err.then((res) => {
+        error = res.message;
+        console.log(error);
+        dispatch(createChildError(error));
       });
+    }
   };
 }
 
@@ -179,15 +164,14 @@ export function deleteRoot() {
 
 export function destroyNode(id, parentId) {
   if (parentId !== null) {
-    return function (dispatch) {
+    return async function (dispatch) {
       dispatch(loadData());
 
-      return request(
+      await request(
         "DELETE",
         `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`
-      ).then(() => {
-        dispatch(deleteNodeSuccess(id, parentId));
-      });
+      );
+      dispatch(deleteNodeSuccess(id, parentId));
     };
   } else {
     alert("Нельзя удалить корневой узел!");
@@ -219,30 +203,24 @@ export function editNodeError(error) {
 }
 
 export function modifyNode(id, newData) {
-  return function (dispatch) {
+  return async function (dispatch) {
     let error = "";
     dispatch(loadData());
 
-    return request(
-      "PUT",
-      `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`,
-      newData
-    )
-      .then((data) => {
-        //console.log("Успешное выполнение PUT-запроса", data);
-        dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
-      })
-      .catch((err) => {
-        // alert("Такое имя уже существует!");
-        // console.log("Error inside PUT-request:", err);
-        // dispatch(editNodeError());
-
-        err.then((data) => {
-          error = data.message;
-          console.log(error);
-          dispatch(editNodeError(error));
-        });
+    try {
+      await request(
+        "PUT",
+        `${process.env.REACT_APP_SERVER_URL}/api/nodes/${id}`,
+        newData
+      );
+      dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
+    } catch (err) {
+      err.then((res) => {
+        error = res.message;
+        console.log(error);
+        dispatch(editNodeError(error));
       });
+    }
   };
 }
 
@@ -295,15 +273,14 @@ export function showTable(data) {
 }
 
 export function fetchAllNodes() {
-  return function (dispatch) {
+  return async function (dispatch) {
     dispatch(loadData());
 
-    return request(
+    const data = await request(
       "GET",
       `${process.env.REACT_APP_SERVER_URL}/api/nodes/all`
-    ).then((data) => {
-      dispatch(showTable(data));
-    });
+    );
+    dispatch(showTable(data));
   };
 }
 

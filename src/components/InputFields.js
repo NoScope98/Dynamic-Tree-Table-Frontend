@@ -7,12 +7,13 @@ const InputFields = ({
   inputPortValue,
   error,
   isValid,
+  language,
 }) => {
   return (
     <>
       <div className="mb-2">
         <label htmlFor="inputName" className="form-label">
-          Имя
+          {language === "ru" ? "Имя" : "Name"}
         </label>
         <input
           className={`form-control ${
@@ -22,16 +23,24 @@ const InputFields = ({
           type="text"
           name="name"
           value={inputNameValue}
-          placeholder="Введите имя"
+          placeholder={language === "ru" ? "Введите имя" : "Enter name"}
           onChange={handleChange}
         ></input>
         <div className="invalid-feedback">
-          {error ? error : "Неккоректный формат имени"}
+          {error
+            ? error === "UniqueConstraintError"
+              ? language === "ru"
+                ? "Такое имя уже существует"
+                : "This name already exists"
+              : null
+            : language === "ru"
+            ? "Неккоректный формат имени"
+            : "Incorrect name format"}
         </div>
       </div>
       <div className="mb-2">
         <label htmlFor="inputIP" className="form-label">
-          IP-адрес
+          {language === "ru" ? "IP-адрес" : "IP-address"}
         </label>
         <input
           className={`form-control ${!isValid.isIPValid ? "is-invalid" : ""}`}
@@ -44,11 +53,15 @@ const InputFields = ({
             handleChange(e);
           }}
         ></input>
-        <div className="invalid-feedback">Некорректный формат IP-адреса</div>
+        <div className="invalid-feedback">
+          {language === "ru"
+            ? "Некорректный формат IP-адреса"
+            : "Incorrect IP format"}
+        </div>
       </div>
       <div className="">
         <label htmlFor="inputPort" className="form-label">
-          Порт
+          {language === "ru" ? "Порт" : "Port"}
         </label>
         <input
           className={`form-control ${!isValid.isPortValid ? "is-invalid" : ""}`}
@@ -61,7 +74,11 @@ const InputFields = ({
             handleChange(e);
           }}
         ></input>
-        <div className="invalid-feedback">Некорректный формат номера порта</div>
+        <div className="invalid-feedback">
+          {language === "ru"
+            ? "Некорректный формат номера порта"
+            : "Incorrect port number format"}
+        </div>
       </div>
     </>
   );

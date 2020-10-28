@@ -24,6 +24,7 @@ const NodeTable = ({
   filteredData,
   onResetFilterButtonClick,
   filteredColumn,
+  language,
 }) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isShownModal, setisShownModal] = useState(false);
@@ -103,15 +104,6 @@ const NodeTable = ({
             <TableBody data={tableData} />
           )}
         </table>
-        {/* {filteredData.length ? (
-          <button
-            type="button"
-            className="btn btn-primary"
-            onClick={onResetFilterButtonClick}
-          >
-            Сбросить фильтр
-          </button>
-        ) : null} */}
         {isShownModal && (
           <FilterModal
             close={() => {
@@ -120,6 +112,7 @@ const NodeTable = ({
             isShown={isShownModal}
             filterColumn={filterColumn}
             onConfirmFilterButtonClick={onConfirmFilterButtonClick}
+            language={language}
           />
         )}
       </>

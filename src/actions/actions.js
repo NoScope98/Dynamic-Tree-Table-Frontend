@@ -293,3 +293,11 @@ export function resetFilter() {
     type: RESET_FILTER,
   };
 }
+
+export const CHANGE_LANGUAGE = "CHANGE_LANGUAGE";
+export function changeLanguage(language) {
+  return {
+    type: CHANGE_LANGUAGE,
+    payload: language,
+  };
+}

@@ -28,7 +28,7 @@ const Runner = () => {
   };
 
   return (
-    <div className="pt-3">
+    <div>
       <input
         type="range"
         className="form-control-range"

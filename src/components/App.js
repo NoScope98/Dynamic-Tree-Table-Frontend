@@ -20,6 +20,8 @@ const App = ({
   viewTree,
   onShowTreeButtonClick,
   onShowTableButtonClick,
+  onChangeLanguageSelectClick,
+  language,
 }) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
 
@@ -39,19 +41,30 @@ const App = ({
             className={`btn btn-primary ${viewTree ? "active" : ""}`}
             onClick={onShowTreeButtonClick}
           >
-            Иерархия
+            {language === "ru" ? "Иерархия" : "Hierarchy"}
           </button>
           <button
             type="button"
             className={`btn btn-primary ${viewTree ? "" : "active"}`}
             onClick={onShowTableButtonClick}
           >
-            Таблица
+            {language === "ru" ? "Таблица" : "Table"}
           </button>
         </div>
-        <Runner />
+        <div className="d-flex justify-content-start align-items-center">
+          <Runner />
+          <select
+            className="custom-select ml-3"
+            onChange={(e) => onChangeLanguageSelectClick(e.target.value)}
+          >
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+          </select>
+        </div>
       </div>
-      <div style={style.loader}>{isFetching ? <Loader /> : null}</div>
+      <div style={style.loader}>
+        {isFetching ? <Loader language={language} /> : null}
+      </div>
       {viewTree ? (
         <div className="row" style={style.table}>
           <div className="col border p-3 rounded mr-1">

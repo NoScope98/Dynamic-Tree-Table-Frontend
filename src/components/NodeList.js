@@ -27,6 +27,7 @@ const NodeList = ({
   isAddFormValid,
   onCloseModal,
   formData,
+  language,
 }) => {
   const [isShownModal, setisShownModal] = useState(false);
   const [parentForModal, setParentForModal] = useState(null);
@@ -103,6 +104,7 @@ const NodeList = ({
           onModalInputChange={onModalInputChange}
           isAddFormValid={isAddFormValid}
           formData={formData}
+          language={language}
         />
       )}
     </>

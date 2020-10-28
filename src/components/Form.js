@@ -1,5 +1,5 @@
 import React from "react";
-import InputFields from "./InputFields";
+import InputFields from "../containers/InputFields";
 
 const Form = ({
   selectedNode,
@@ -8,6 +8,7 @@ const Form = ({
   serverError,
   isEditFormValid,
   formData,
+  language,
 }) => {
   function handleChange(e) {
     onInputChange(e.target.name, e.target.value);
@@ -32,8 +33,12 @@ const Form = ({
           {selectedNode
             ? selectedNode.name
               ? selectedNode.name
-              : "Узел"
-            : "Узел"}
+              : language === "ru"
+              ? "Узел"
+              : "Node"
+            : language === "ru"
+            ? "Узел"
+            : "Node"}
         </div>
         <InputFields
           handleChange={handleChange}
@@ -60,7 +65,9 @@ const Form = ({
             )
           }
         >
-          Изменить выбранный узел
+          {language === "ru"
+            ? "Изменить выбранный узел"
+            : "Change current node"}
         </button>
       </div>
     </form>

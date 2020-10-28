@@ -3,6 +3,7 @@ import NodeList from "../containers/NodeList";
 import Form from "../containers/Form";
 import Loader from "./Loader";
 import NodeTable from "../containers/NodeTable";
+import Runner from "./Runner";
 
 const style = {
   loader: {
@@ -31,7 +32,7 @@ const App = ({
 
   return (
     <div className="container mt-3 px-5">
-      <div>
+      <div className="d-flex justify-content-between">
         <div className="btn-group" role="group">
           <button
             type="button"
@@ -48,8 +49,9 @@ const App = ({
             Таблица
           </button>
         </div>
-        <div style={style.loader}>{isFetching ? <Loader /> : null}</div>
+        <Runner />
       </div>
+      <div style={style.loader}>{isFetching ? <Loader /> : null}</div>
       {viewTree ? (
         <div className="row" style={style.table}>
           <div className="col border p-3 rounded mr-1">

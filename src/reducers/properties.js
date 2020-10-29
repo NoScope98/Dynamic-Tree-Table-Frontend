@@ -21,8 +21,8 @@ const initialState = {
   isFetching: false,
   overNode: null,
   serverErrors: { add: "", edit: "" },
-  viewTree: false,
-  language: "en",
+  viewTree: true,
+  language: "ru",
 };
 
 const properties = (state = initialState, action) => {

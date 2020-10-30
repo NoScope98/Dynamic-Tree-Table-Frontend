@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./containers/App";
@@ -16,9 +16,11 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Suspense fallback="loading">
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Suspense>,
   document.getElementById("root")
 );
 

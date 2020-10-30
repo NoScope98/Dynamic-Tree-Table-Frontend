@@ -55,15 +55,14 @@ const App = ({
         <div className="d-flex justify-content-start align-items-center">
           <Runner />
           <select
-            defaultValue={localStorage.getItem("language") || "ru"}
+            defaultValue={localStorage.getItem("i18nextLng") || "en"}
             className="custom-select ml-3"
             onChange={(e) => {
-              localStorage.setItem("language", e.target.value);
               i18n.changeLanguage(e.target.value);
             }}
           >
             <option value="ru">Русский</option>
-            <option value="en">English</option>
+            <option value="en-GB">English</option>
           </select>
         </div>
       </div>

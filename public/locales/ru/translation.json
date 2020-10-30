@@ -1,0 +1,23 @@
+{
+    "Table": "Таблица",
+    "Hierarchy": "Иерархия",
+    "Loading": "Загрузка",
+    "AddingNode": "Добавление узла",
+    "Close": "Закрыть",
+    "Add": "Добавить",
+    "Name": "Имя",
+    "EnterName": "Введите имя",
+    "NameExists": "Такое имя уже существует",
+    "IncorrectNameFormat": "Неккоректный формат имени",
+    "IPAddress": "IP-адрес",
+    "IncorrectIPFormat": "Некорректный формат IP-адреса",
+    "Port": "Порт",
+    "IncorrectPortNumberFormat": "Некорректный формат номера порта",
+    "Node": "Узел",
+    "ChangeCurrentNode": "Изменить выбранный узел",
+    "AddingFilter": "Добавление фильтра",
+    "Filter": "Фильтр",
+    "EnterFilter": "Введите фильтр",
+    "FillThisField": "Заполните поле",
+    "ConfirmFilter": "Применить фильтр"
+}

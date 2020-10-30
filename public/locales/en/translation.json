@@ -1,0 +1,23 @@
+{
+    "Table": "Table",
+    "Hierarchy": "Hierarchy",
+    "Loading": "Loading",
+    "AddingNode": "Adding node",
+    "Close": "Close",
+    "Add": "Add",
+    "Name": "Name",
+    "EnterName": "Enter name",
+    "NameExists": "This name already exists",
+    "IncorrectNameFormat": "Incorrect name format",
+    "IPAddress": "IP-address",
+    "IncorrectIPFormat": "Incorrect IP format",
+    "Port": "Port",
+    "IncorrectPortNumberFormat": "Incorrect port number format",
+    "Node": "Node",
+    "ChangeCurrentNode": "Change current node",
+    "AddingFilter": "Adding filter",
+    "Filter": "Filter",
+    "EnterFilter": "Enter filter",
+    "FillThisField": "Fill this field",
+    "ConfirmFilter": "Confirm filter"
+}

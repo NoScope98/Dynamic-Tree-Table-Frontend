@@ -14,7 +14,6 @@ import {
   CHANGE_MODAL_INPUT,
   SHOW_TREE,
   SHOW_TABLE,
-  CHANGE_LANGUAGE,
 } from "../actions/actions";
 
 const initialState = {
@@ -22,7 +21,6 @@ const initialState = {
   overNode: null,
   serverErrors: { add: "", edit: "" },
   viewTree: true,
-  language: "ru",
 };
 
 const properties = (state = initialState, action) => {
@@ -83,9 +81,6 @@ const properties = (state = initialState, action) => {
       return { ...state, viewTree: true };
     case SHOW_TABLE:
       return { ...state, viewTree: false, isFetching: false };
-
-    case CHANGE_LANGUAGE:
-      return { ...state, language: action.payload };
 
     default:
       return state;

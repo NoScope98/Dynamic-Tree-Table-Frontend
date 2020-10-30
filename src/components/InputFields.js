@@ -1,4 +1,5 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const InputFields = ({
   handleChange,
@@ -7,13 +8,14 @@ const InputFields = ({
   inputPortValue,
   error,
   isValid,
-  language,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="mb-2">
         <label htmlFor="inputName" className="form-label">
-          {language === "ru" ? "Имя" : "Name"}
+          {t("Name")}
         </label>
         <input
           className={`form-control ${
@@ -23,24 +25,20 @@ const InputFields = ({
           type="text"
           name="name"
           value={inputNameValue}
-          placeholder={language === "ru" ? "Введите имя" : "Enter name"}
+          placeholder={t("EnterName")}
           onChange={handleChange}
         ></input>
         <div className="invalid-feedback">
           {error
             ? error === "UniqueConstraintError"
-              ? language === "ru"
-                ? "Такое имя уже существует"
-                : "This name already exists"
+              ? t("NameExists")
               : null
-            : language === "ru"
-            ? "Неккоректный формат имени"
-            : "Incorrect name format"}
+            : t("IncorrectNameFormat")}
         </div>
       </div>
       <div className="mb-2">
         <label htmlFor="inputIP" className="form-label">
-          {language === "ru" ? "IP-адрес" : "IP-address"}
+          {t("IPAddress")}
         </label>
         <input
           className={`form-control ${!isValid.isIPValid ? "is-invalid" : ""}`}
@@ -53,15 +51,11 @@ const InputFields = ({
             handleChange(e);
           }}
         ></input>
-        <div className="invalid-feedback">
-          {language === "ru"
-            ? "Некорректный формат IP-адреса"
-            : "Incorrect IP format"}
-        </div>
+        <div className="invalid-feedback">{t("IncorrectIPFormat")}</div>
       </div>
       <div className="">
         <label htmlFor="inputPort" className="form-label">
-          {language === "ru" ? "Порт" : "Port"}
+          {t("Port")}
         </label>
         <input
           className={`form-control ${!isValid.isPortValid ? "is-invalid" : ""}`}
@@ -74,11 +68,7 @@ const InputFields = ({
             handleChange(e);
           }}
         ></input>
-        <div className="invalid-feedback">
-          {language === "ru"
-            ? "Некорректный формат номера порта"
-            : "Incorrect port number format"}
-        </div>
+        <div className="invalid-feedback">{t("IncorrectPortNumberFormat")}</div>
       </div>
     </>
   );

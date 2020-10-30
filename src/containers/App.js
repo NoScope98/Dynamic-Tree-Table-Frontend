@@ -1,11 +1,6 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import {
-  fetchRoot,
-  showTree,
-  fetchAllNodes,
-  changeLanguage,
-} from "../actions/actions";
+import { fetchRoot, showTree, fetchAllNodes } from "../actions/actions";
 
 const mapStateToProps = (store) => {
   return {
@@ -14,7 +9,6 @@ const mapStateToProps = (store) => {
     nodes: store.nodes,
     formData: store.form,
     viewTree: store.properties.viewTree,
-    language: store.properties.language,
   };
 };
 
@@ -28,9 +22,6 @@ const mapDispatchToProps = (dispatch) => {
     },
     onShowTableButtonClick: () => {
       dispatch(fetchAllNodes());
-    },
-    onChangeLanguageSelectClick: (language) => {
-      dispatch(changeLanguage(language));
     },
   };
 };

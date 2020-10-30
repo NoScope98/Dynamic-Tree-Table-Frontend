@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+
 import NodeList from "../containers/NodeList";
 import Form from "../containers/Form";
 import Loader from "./Loader";
@@ -20,10 +22,9 @@ const App = ({
   viewTree,
   onShowTreeButtonClick,
   onShowTableButtonClick,
-  onChangeLanguageSelectClick,
-  language,
 }) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     if (isFirstRender) {
@@ -41,28 +42,24 @@ const App = ({
             className={`btn btn-primary ${viewTree ? "active" : ""}`}
             onClick={onShowTreeButtonClick}
           >
-            {language === "ru" ? "Иерархия" : "Hierarchy"}
+            {t("Hierarchy")}
           </button>
           <button
             type="button"
             className={`btn btn-primary ${viewTree ? "" : "active"}`}
             onClick={onShowTableButtonClick}
           >
-            {language === "ru" ? "Таблица" : "Table"}
+            {t("Table")}
           </button>
         </div>
         <div className="d-flex justify-content-start align-items-center">
           <Runner />
           <select
-            defaultValue={
-              localStorage.getItem("language")
-                ? localStorage.getItem("language")
-                : "ru"
-            }
+            defaultValue={localStorage.getItem("language") || "ru"}
             className="custom-select ml-3"
             onChange={(e) => {
-              onChangeLanguageSelectClick(e.target.value);
               localStorage.setItem("language", e.target.value);
+              i18n.changeLanguage(e.target.value);
             }}
           >
             <option value="ru">Русский</option>
@@ -70,20 +67,18 @@ const App = ({
           </select>
         </div>
       </div>
-      <div style={style.loader}>
-        {isFetching ? <Loader language={language} /> : null}
-      </div>
+      <div style={style.loader}>{isFetching ? <Loader t={t} /> : null}</div>
       {viewTree ? (
         <div className="row" style={style.table}>
           <div className="col border p-3 rounded mr-1">
-            <NodeList />
+            <NodeList t={t} />
           </div>
           <div className="col border p-3 rounded">
-            <Form />
+            <Form t={t} />
           </div>
         </div>
       ) : (
-        <NodeTable onShowTableButtonClick={onShowTableButtonClick} />
+        <NodeTable onShowTableButtonClick={onShowTableButtonClick} t={t} />
       )}
     </div>
   );

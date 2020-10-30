@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Modal } from "react-bootstrap";
-import InputFields from "../containers/InputFields";
+import InputFields from "./InputFields";
 
 function AddModal({
   close,
@@ -11,7 +11,7 @@ function AddModal({
   onModalInputChange,
   isAddFormValid,
   formData,
-  language,
+  t,
 }) {
   function handleChange(e) {
     onModalInputChange(e.target.name, e.target.value);
@@ -40,9 +40,7 @@ function AddModal({
     <>
       <Modal show={isShown} onHide={close}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {language === "ru" ? "Добавление узла" : "Adding node"}
-          </Modal.Title>
+          <Modal.Title>{t("AddingNode")}</Modal.Title>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Body>
@@ -57,7 +55,7 @@ function AddModal({
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" variant="secondary" onClick={close}>
-              {language === "ru" ? "Закрыть" : "Close"}
+              {t("Close")}
             </Button>
             <Button
               type="submit"
@@ -70,7 +68,7 @@ function AddModal({
                 )
               }
             >
-              {language === "ru" ? "Добавить" : "Add"}
+              {t("Add")}
             </Button>
           </Modal.Footer>
         </form>

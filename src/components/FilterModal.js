@@ -6,7 +6,7 @@ const FilterModal = ({
   close,
   filterColumn,
   onConfirmFilterButtonClick,
-  language,
+  t,
 }) => {
   const [inputFilter, setInputFilter] = useState("");
   const [isValid, setIsValid] = useState(true);
@@ -34,39 +34,33 @@ const FilterModal = ({
     <>
       <Modal show={isShown} onHide={close}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {language === "ru" ? "Добавление фильтра" : "Adding filter"}
-          </Modal.Title>
+          <Modal.Title>{t("AddingFilter")}</Modal.Title>
         </Modal.Header>
         <form onSubmit={onSubmit}>
           <Modal.Body>
             <label htmlFor="inputFilter" className="form-label">
-              {language === "ru" ? "Фильтр" : "Filter"}
+              {t("Filter")}
             </label>
             <input
               id="inputFilter"
               type="text"
               name="filter"
               className={`form-control ${isValid ? "" : "is-invalid"}`}
-              placeholder={
-                language === "ru" ? "Введите фильтр" : "Enter filter"
-              }
+              placeholder={t("EnterFilter")}
               value={inputFilter}
               onChange={(e) => {
                 setInputFilter(e.target.value);
                 setIsValid(true);
               }}
             ></input>
-            <div className="invalid-feedback">
-              {language === "ru" ? "Заполните поле" : "Fill this field"}
-            </div>
+            <div className="invalid-feedback">{t("FillThisField")}</div>
           </Modal.Body>
           <Modal.Footer>
             <Button type="button" variant="secondary" onClick={close}>
-              {language === "ru" ? "Закрыть" : "Close"}
+              {t("Close")}
             </Button>
             <Button type="submit" variant="primary" onClick={checkValidity}>
-              {language === "ru" ? "Применить фильтр" : "Confirm filter"}
+              {t("ConfirmFilter")}
             </Button>
           </Modal.Footer>
         </form>

@@ -13,7 +13,6 @@ const mapStateToProps = (store) => {
     formData: store.form.editForm,
     serverError: store.properties.serverErrors.edit,
     isEditFormValid: store.validation.editForm,
-    language: store.properties.language,
   };
 };
 

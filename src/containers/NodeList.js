@@ -18,7 +18,6 @@ const mapStateToProps = (store) => {
     serverError: store.properties.serverErrors.add,
     isAddFormValid: store.validation.addForm,
     formData: store.form.addForm,
-    language: store.properties.language,
   };
 };
 

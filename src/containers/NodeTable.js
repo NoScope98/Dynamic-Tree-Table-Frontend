@@ -8,7 +8,6 @@ const mapStateToProps = (store) => {
     sortedKey: store.table.sortedKey,
     filteredData: store.table.filteredData,
     filteredColumn: store.table.filteredColumn,
-    language: store.properties.language,
   };
 };
 

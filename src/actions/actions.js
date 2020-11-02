@@ -130,7 +130,7 @@ export function addChild(newChild) {
       if (err.response) {
         console.log("Error from server response", err.response.data.message);
         dispatch(createChildError(err.response.data.message));
-        throw new Error();
+        throw new Error(err.response);
       } else {
         console.log(err);
       }
@@ -161,7 +161,7 @@ export function destroyNode(id, parentId) {
     return async function (dispatch) {
       dispatch(loadData());
 
-      await request("DELETE", `/api/nodes/${id}`);
+      await API.delete(`/api/nodes/${id}`);
       dispatch(deleteNodeSuccess(id, parentId));
     };
   } else {
@@ -195,18 +195,18 @@ export function editNodeError(error) {
 
 export function modifyNode(id, newData) {
   return async function (dispatch) {
-    let error = "";
     dispatch(loadData());
 
     try {
-      await request("PUT", `/api/nodes/${id}`, newData);
+      await API.put(`/api/nodes/${id}`, newData);
       dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
     } catch (err) {
-      err.then((res) => {
-        error = res.message;
-        console.log(error);
-        dispatch(editNodeError(error));
-      });
+      if (err.response) {
+        console.log("Error from server response", err.response.data.message);
+        dispatch(editNodeError(err.response.data.message));
+      } else {
+        console.log(err);
+      }
     }
   };
 }
@@ -263,8 +263,12 @@ export function fetchAllNodes() {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request("GET", `/api/nodes/all`);
-    dispatch(showTable(data));
+    try {
+      const response = await API.get("/api/nodes/all");
+      dispatch(showTable(response.data));
+    } catch (err) {
+      console.log("Error with fetching all nodes", err);
+    }
   };
 }
 

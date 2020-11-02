@@ -31,13 +31,10 @@ function AddModal({
         ...data,
         parentId: selectedParent.id,
       });
+      close();
     } catch (err) {
       console.log("ERROR IN SUBMIT", err);
     }
-
-    // if (!serverError) {
-    //   close();
-    // }
   }
 
   return (

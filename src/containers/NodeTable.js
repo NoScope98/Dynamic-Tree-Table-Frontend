@@ -13,15 +13,13 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTitleColumnClick: (key, isFilteredData) => {
-      dispatch(sortNodes(key, isFilteredData));
-    },
-    onConfirmFilterButtonClick: (key, value) => {
-      dispatch(filterNodes(key, value));
-    },
-    onResetFilterButtonClick: () => {
-      dispatch(resetFilter());
-    },
+    onTitleColumnClick: (key, isFilteredData) =>
+      dispatch(sortNodes(key, isFilteredData)),
+
+    onConfirmFilterButtonClick: (key, value) =>
+      dispatch(filterNodes(key, value)),
+
+    onResetFilterButtonClick: () => dispatch(resetFilter()),
   };
 };
 

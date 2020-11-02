@@ -23,30 +23,21 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onTreeItemClick: (id) => {
-      dispatch(fetchChildren(id));
-    },
-    onSelected: (node) => {
-      dispatch(selectedNode(node));
-    },
-    onMouseEnterNode: (name) => {
-      dispatch(mouseEnterNode(name));
-    },
-    onMouseLeaveNode: () => {
-      dispatch(mouseLeaveNode());
-    },
-    onDeleteNodeButtonClick: (id, parentId) => {
-      dispatch(destroyNode(id, parentId));
-    },
-    onAddChildButtonClick: (newChild) => {
-      dispatch(addChild(newChild));
-    },
-    onModalInputChange: (targetName, value) => {
-      dispatch(changeModalInput(targetName, value));
-    },
-    onCloseModal: () => {
-      dispatch(resetModalInput());
-    },
+    onTreeItemClick: (id) => dispatch(fetchChildren(id)),
+    onSelected: (node) => dispatch(selectedNode(node)),
+
+    onMouseEnterNode: (name) => dispatch(mouseEnterNode(name)),
+    onMouseLeaveNode: () => dispatch(mouseLeaveNode()),
+
+    onDeleteNodeButtonClick: (id, parentId) =>
+      dispatch(destroyNode(id, parentId)),
+
+    onAddChildButtonClick: (newChild) => dispatch(addChild(newChild)),
+
+    onModalInputChange: (targetName, value) =>
+      dispatch(changeModalInput(targetName, value)),
+
+    onCloseModal: () => dispatch(resetModalInput()),
   };
 };
 

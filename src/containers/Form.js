@@ -18,18 +18,14 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onInputChange: (targetName, value) => {
-      dispatch(changeInput(targetName, value));
-    },
-    onEditButtonClick: (id, newData) => {
-      dispatch(modifyNode(id, newData));
-    },
-    onAddChildButtonClick: (newChild) => {
-      dispatch(addChild(newChild));
-    },
-    onDeleteNodeButtonClick: (id, parentId) => {
-      dispatch(destroyNode(id, parentId));
-    },
+    onInputChange: (targetName, value) =>
+      dispatch(changeInput(targetName, value)),
+
+    onEditButtonClick: (id, newData) => dispatch(modifyNode(id, newData)),
+    onAddChildButtonClick: (newChild) => dispatch(addChild(newChild)),
+
+    onDeleteNodeButtonClick: (id, parentId) =>
+      dispatch(destroyNode(id, parentId)),
   };
 };
 

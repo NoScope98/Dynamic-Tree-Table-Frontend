@@ -14,15 +14,9 @@ const mapStateToProps = (store) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onLoadRootButtonClick: () => {
-      dispatch(fetchRoot());
-    },
-    onShowTreeButtonClick: () => {
-      dispatch(showTree());
-    },
-    onShowTableButtonClick: () => {
-      dispatch(fetchAllNodes());
-    },
+    onLoadRootButtonClick: () => dispatch(fetchRoot()),
+    onShowTreeButtonClick: () => dispatch(showTree()),
+    onShowTableButtonClick: () => dispatch(fetchAllNodes()),
   };
 };
 

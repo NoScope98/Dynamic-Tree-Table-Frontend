@@ -1,34 +1,5 @@
 import API from "../api";
 
-async function request(method, route, body = null) {
-  let response;
-  const urlHost = `http://${window.location.hostname}:4000`;
-  if (method === "GET" || method === "DELETE") {
-    response = await fetch(`${urlHost}${route}`, {
-      method: method,
-    });
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(response.json());
-    }
-  } else {
-    const headers = {
-      "Content-Type": "application/json",
-    };
-    response = await fetch(`${urlHost}${route}`, {
-      method: method,
-      body: JSON.stringify(body),
-      headers: headers,
-    });
-    if (response.ok) {
-      return response.json();
-    } else {
-      return Promise.reject(response.json());
-    }
-  }
-}
-
 export const LOAD_DATA = "LOAD_DATA";
 export function loadData() {
   return {

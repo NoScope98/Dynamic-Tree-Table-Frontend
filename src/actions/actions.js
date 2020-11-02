@@ -1,3 +1,5 @@
+import API from "../api";
+
 async function request(method, route, body = null) {
   let response;
   const urlHost = `http://${window.location.hostname}:4000`;
@@ -42,20 +44,16 @@ export function loadRootSuccess(root) {
   };
 }
 
-export const LOAD_ROOT_ERROR = "LOAD_ROOT_ERROR";
-export function loadRootError(error) {
-  return {
-    type: LOAD_ROOT_SUCCESS,
-    error: error,
-  };
-}
-
 export function fetchRoot() {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request("GET", `/api/nodes`);
-    dispatch(loadRootSuccess(data));
+    try {
+      const response = await API.get("/api/nodes");
+      dispatch(loadRootSuccess(response.data));
+    } catch (err) {
+      console.log("Error with fetching root", err);
+    }
   };
 }
 
@@ -74,8 +72,12 @@ export function fetchChildren(id) {
   return async function (dispatch) {
     dispatch(loadData());
 
-    const data = await request("GET", `/api/nodes/${id}/children`);
-    dispatch(loadChildrenSuccess(id, data));
+    try {
+      const response = await API.get(`/api/nodes/${id}/children`);
+      dispatch(loadChildrenSuccess(id, response.data));
+    } catch (err) {
+      console.log("Error with fetching root", err);
+    }
   };
 }
 
@@ -119,18 +121,19 @@ export function createChildError(error) {
 
 export function addChild(newChild) {
   return async function (dispatch) {
-    let error = "";
     dispatch(loadData());
 
     try {
-      const data = await request("POST", `/api/nodes`, newChild);
-      dispatch(createChildSuccess(newChild.parentId, data));
+      const response = await API.post("/api/nodes", newChild);
+      dispatch(createChildSuccess(newChild.parentId, response.data));
     } catch (err) {
-      err.then((res) => {
-        error = res.message;
-        console.log(error);
-        dispatch(createChildError(error));
-      });
+      if (err.response) {
+        console.log("Error from server response", err.response.data.message);
+        dispatch(createChildError(err.response.data.message));
+        throw new Error();
+      } else {
+        console.log(err);
+      }
     }
   };
 }

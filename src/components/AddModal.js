@@ -17,7 +17,7 @@ function AddModal({
     onModalInputChange(e.target.name, e.target.value);
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
     e.preventDefault();
 
     const data = {
@@ -26,10 +26,14 @@ function AddModal({
       port: Number(e.target.port.value),
     };
 
-    onAddChildButtonClick({
-      ...data,
-      parentId: selectedParent.id,
-    });
+    try {
+      await onAddChildButtonClick({
+        ...data,
+        parentId: selectedParent.id,
+      });
+    } catch (err) {
+      console.log("ERROR IN SUBMIT", err);
+    }
 
     // if (!serverError) {
     //   close();

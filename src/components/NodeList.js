@@ -27,7 +27,7 @@ const NodeList = ({
   isAddFormValid,
   onCloseModal,
   formData,
-  t
+  t,
 }) => {
   const [isShownModal, setisShownModal] = useState(false);
   const [parentForModal, setParentForModal] = useState(null);

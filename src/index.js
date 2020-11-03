@@ -5,7 +5,11 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import "./index.css";
 import App from "./containers/App";
-import rootReducer from "./reducers/rootReducer";
+import form from "./reducers/form";
+import node from "./reducers/node";
+import properties from "./reducers/properties";
+import table from "./reducers/table";
+import validation from "./reducers/validation";
 import "./i18n";
 
 const middleware = getDefaultMiddleware({
@@ -15,7 +19,7 @@ const middleware = getDefaultMiddleware({
 });
 
 const store = configureStore({
-  reducer: rootReducer,
+  reducer: { form, node, properties, table, validation },
   middleware,
   devTools: process.env.NODE_ENV !== "production",
 });

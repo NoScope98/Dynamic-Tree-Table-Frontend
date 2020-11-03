@@ -13,7 +13,7 @@ import {
 
 const mapStateToProps = (store) => {
   return {
-    nodes: store.nodes,
+    nodes: store.node,
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
     isAddFormValid: store.validation.addForm,

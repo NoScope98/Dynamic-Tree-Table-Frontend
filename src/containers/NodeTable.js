@@ -11,16 +11,10 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTitleColumnClick: (key, isFilteredData) =>
-      dispatch(sortNodes(key, isFilteredData)),
-
-    onConfirmFilterButtonClick: (key, value) =>
-      dispatch(filterNodes(key, value)),
-
-    onResetFilterButtonClick: () => dispatch(resetFilter()),
-  };
+const actionCreators = {
+  onConfirmFilterButtonClick: filterNodes,
+  onResetFilterButtonClick: resetFilter,
+  onTitleColumnClick: sortNodes,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NodeTable);
+export default connect(mapStateToProps, actionCreators)(NodeTable);

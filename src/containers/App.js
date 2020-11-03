@@ -12,12 +12,10 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onLoadRootButtonClick: () => dispatch(fetchRoot()),
-    onShowTreeButtonClick: () => dispatch(showTree()),
-    onShowTableButtonClick: () => dispatch(fetchAllNodes()),
-  };
+const actionCreators = {
+  onLoadRootButtonClick: fetchRoot,
+  onShowTreeButtonClick: showTree,
+  onShowTableButtonClick: fetchAllNodes,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, actionCreators)(App);

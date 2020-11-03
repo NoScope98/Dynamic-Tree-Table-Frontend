@@ -16,17 +16,11 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onInputChange: (targetName, value) =>
-      dispatch(changeInput(targetName, value)),
-
-    onEditButtonClick: (id, newData) => dispatch(modifyNode(id, newData)),
-    onAddChildButtonClick: (newChild) => dispatch(addChild(newChild)),
-
-    onDeleteNodeButtonClick: (id, parentId) =>
-      dispatch(destroyNode(id, parentId)),
-  };
+const actionCreators = {
+  onInputChange: changeInput,
+  onEditButtonClick: modifyNode,
+  onAddChildButtonClick: addChild,
+  onDeleteNodeButtonClick: destroyNode,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, actionCreators)(Form);

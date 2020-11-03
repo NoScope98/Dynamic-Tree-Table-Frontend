@@ -21,24 +21,15 @@ const mapStateToProps = (store) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onTreeItemClick: (id) => dispatch(fetchChildren(id)),
-    onSelected: (node) => dispatch(selectedNode(node)),
-
-    onMouseEnterNode: (name) => dispatch(mouseEnterNode(name)),
-    onMouseLeaveNode: () => dispatch(mouseLeaveNode()),
-
-    onDeleteNodeButtonClick: (id, parentId) =>
-      dispatch(destroyNode(id, parentId)),
-
-    onAddChildButtonClick: (newChild) => dispatch(addChild(newChild)),
-
-    onModalInputChange: (targetName, value) =>
-      dispatch(changeModalInput(targetName, value)),
-
-    onCloseModal: () => dispatch(resetModalInput()),
-  };
+const actionCreators = {
+  onTreeItemClick: fetchChildren,
+  onMouseEnterNode: mouseEnterNode,
+  onMouseLeaveNode: mouseLeaveNode,
+  onSelected: selectedNode,
+  onDeleteNodeButtonClick: destroyNode,
+  onAddChildButtonClick: addChild,
+  onModalInputChange: changeModalInput,
+  onCloseModal: resetModalInput,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NodeList);
+export default connect(mapStateToProps, actionCreators)(NodeList);

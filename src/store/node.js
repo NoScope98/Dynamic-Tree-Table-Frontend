@@ -1,12 +1,4 @@
-import {
-  LOAD_ROOT_SUCCESS,
-  LOAD_CHILDREN_SUCCESS,
-  CREATE_CHILD_SUCCESS,
-  DELETE_NODE_SUCCESS,
-  EDIT_NODE_SUCCESS,
-} from "../actions/actions";
-
-const initialState = {};
+import { createSlice } from "@reduxjs/toolkit";
 
 const addArrayChildren = (obj, id, children) => {
   if (obj.id === id) {
@@ -61,46 +53,40 @@ const editNode = (obj, id, newData) => {
   }
 };
 
-const nodeReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case LOAD_ROOT_SUCCESS:
-      return action.payload;
-
-    case LOAD_CHILDREN_SUCCESS:
-      const newState = { ...state };
-      addArrayChildren(newState, action.payload.id, action.payload.children);
-      return newState;
-
-    case CREATE_CHILD_SUCCESS:
-      const newStateAfterCreate = { ...state };
-      addChild(
-        newStateAfterCreate,
-        action.payload.parentId,
-        action.payload.newChild
-      );
-      return newStateAfterCreate;
-
-    case DELETE_NODE_SUCCESS:
-      const newStateAfterDelete = { ...state };
-      deleteNode(
-        newStateAfterDelete,
-        action.payload.id,
-        action.payload.parentId
-      );
-      return newStateAfterDelete;
-
-    case EDIT_NODE_SUCCESS:
-      const newStateAfterEdit = { ...state };
-      editNode(newStateAfterEdit, action.payload.id, {
+const nodeSlice = createSlice({
+  name: "node",
+  initialState: {
+    tree: {},
+  },
+  reducers: {
+    loadRootSuccess: (state, action) => {
+      state.tree = action.payload;
+    },
+    loadChildrenSuccess: (state, action) => {
+      addArrayChildren(state.tree, action.payload.id, action.payload.children);
+    },
+    createChildSuccess: (state, action) => {
+      addChild(state.tree, action.payload.parentId, action.payload.newChild);
+    },
+    deleteNodeSuccess: (state, action) => {
+      deleteNode(state.tree, action.payload.id, action.payload.parentId);
+    },
+    editNodeSuccess: (state, action) => {
+      editNode(state.tree, action.payload.id, {
         name: action.payload.name,
         IP: action.payload.IP,
         port: action.payload.port,
       });
-      return newStateAfterEdit;
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
+export const {
+  loadRootSuccess,
+  loadChildrenSuccess,
+  createChildSuccess,
+  deleteNodeSuccess,
+  editNodeSuccess,
+} = nodeSlice.actions;
 
-export default nodeReducer;
+export default nodeSlice.reducer;

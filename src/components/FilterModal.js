@@ -15,7 +15,7 @@ const FilterModal = ({
     e.preventDefault();
 
     if (isValid) {
-      onConfirmFilterButtonClick(filterColumn, inputFilter);
+      onConfirmFilterButtonClick({ key: filterColumn, value: inputFilter });
       close();
     } else {
       setIsValid(false);

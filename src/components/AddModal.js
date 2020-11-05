@@ -9,12 +9,11 @@ function AddModal({
   selectedParent,
   serverError,
   onModalInputChange,
-  isAddFormValid,
   formData,
   t,
 }) {
   function handleChange(e) {
-    onModalInputChange(e.target.name, e.target.value);
+    onModalInputChange({ targetName: e.target.name, value: e.target.value });
   }
 
   async function onSubmit(e) {
@@ -48,10 +47,7 @@ function AddModal({
             <InputFields
               handleChange={handleChange}
               error={serverError}
-              isValid={isAddFormValid}
-              inputNameValue={formData.name}
-              inputIPValue={formData.IP}
-              inputPortValu={formData.port}
+              formData={formData}
             />
           </Modal.Body>
           <Modal.Footer>
@@ -63,9 +59,9 @@ function AddModal({
               variant="primary"
               disabled={
                 !(
-                  isAddFormValid.isNameValid &&
-                  isAddFormValid.isIPValid &&
-                  isAddFormValid.isPortValid
+                  formData.name.isValid &&
+                  formData.IP.isValid &&
+                  formData.port.isValid
                 )
               }
             >

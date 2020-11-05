@@ -24,7 +24,6 @@ const NodeList = ({
   onAddChildButtonClick,
   serverError,
   onModalInputChange,
-  isAddFormValid,
   onCloseModal,
   formData,
   t,
@@ -102,7 +101,6 @@ const NodeList = ({
           selectedParent={parentForModal}
           serverError={serverError}
           onModalInputChange={onModalInputChange}
-          isAddFormValid={isAddFormValid}
           formData={formData}
           t={t}
         />

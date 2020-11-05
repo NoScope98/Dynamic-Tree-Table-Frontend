@@ -1,14 +1,7 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 
-const InputFields = ({
-  handleChange,
-  inputNameValue,
-  inputIPValue,
-  inputPortValue,
-  error,
-  isValid,
-}) => {
+const InputFields = ({ handleChange, error, formData }) => {
   const { t } = useTranslation();
 
   return (
@@ -19,12 +12,12 @@ const InputFields = ({
         </label>
         <input
           className={`form-control ${
-            error || !isValid.isNameValid ? "is-invalid" : ""
+            error || !formData.name.isValid ? "is-invalid" : ""
           }`}
           id="inputName"
           type="text"
           name="name"
-          value={inputNameValue}
+          value={formData.name.value}
           placeholder={t("EnterName")}
           onChange={handleChange}
         ></input>
@@ -41,11 +34,11 @@ const InputFields = ({
           {t("IPAddress")}
         </label>
         <input
-          className={`form-control ${!isValid.isIPValid ? "is-invalid" : ""}`}
+          className={`form-control ${!formData.IP.isValid ? "is-invalid" : ""}`}
           id="inputIP"
           type="text"
           name="IP"
-          value={inputIPValue}
+          value={formData.IP.value}
           placeholder="0.0.0.0"
           onChange={(e) => {
             handleChange(e);
@@ -58,11 +51,13 @@ const InputFields = ({
           {t("Port")}
         </label>
         <input
-          className={`form-control ${!isValid.isPortValid ? "is-invalid" : ""}`}
+          className={`form-control ${
+            !formData.port.isValid ? "is-invalid" : ""
+          }`}
           id="inputPort"
           type="text"
           name="port"
-          value={inputPortValue}
+          value={formData.port.value}
           placeholder="0000"
           onChange={(e) => {
             handleChange(e);

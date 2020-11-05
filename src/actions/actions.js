@@ -1,19 +1,13 @@
 import API from "../api";
-
-export const LOAD_DATA = "LOAD_DATA";
-export function loadData() {
-  return {
-    type: LOAD_DATA,
-  };
-}
-
-export const LOAD_ROOT_SUCCESS = "LOAD_ROOT_SUCCESS";
-export function loadRootSuccess(root) {
-  return {
-    type: LOAD_ROOT_SUCCESS,
-    payload: root,
-  };
-}
+import {
+  loadRootSuccess,
+  loadChildrenSuccess,
+  createChildSuccess,
+  deleteNodeSuccess,
+  editNodeSuccess,
+} from "../store/node";
+import { loadData, createChildError, editNodeError } from "../store/properties";
+import { showTable } from "../store/table";
 
 export function fetchRoot() {
   return async function (dispatch) {
@@ -28,65 +22,16 @@ export function fetchRoot() {
   };
 }
 
-export const LOAD_CHILDREN_SUCCESS = "LOAD_CHILDREN_SUCCESS";
-export function loadChildrenSuccess(id, children) {
-  return {
-    type: LOAD_CHILDREN_SUCCESS,
-    payload: {
-      id,
-      children,
-    },
-  };
-}
-
 export function fetchChildren(id) {
   return async function (dispatch) {
     dispatch(loadData());
 
     try {
       const response = await API.get(`/api/nodes/${id}/children`);
-      dispatch(loadChildrenSuccess(id, response.data));
+      dispatch(loadChildrenSuccess({ id, children: response.data }));
     } catch (err) {
       console.log("Error with fetching root", err);
     }
-  };
-}
-
-export const SELECTED_NODE = "SELECTED_NODE";
-export function selectedNode(node) {
-  return {
-    type: SELECTED_NODE,
-    payload: node,
-  };
-}
-
-export const CHANGE_INPUT = "CHANGE_INPUT";
-export function changeInput(targetName, value) {
-  return {
-    type: CHANGE_INPUT,
-    payload: {
-      targetName: targetName,
-      value: value,
-    },
-  };
-}
-
-export const CREATE_CHILD_SUCCESS = "CREATE_CHILD_SUCCESS";
-export function createChildSuccess(parentId, newChild) {
-  return {
-    type: CREATE_CHILD_SUCCESS,
-    payload: {
-      parentId,
-      newChild,
-    },
-  };
-}
-
-export const CREATE_CHILD_ERROR = "CREATE_CHILD_ERROR";
-export function createChildError(error) {
-  return {
-    type: CREATE_CHILD_ERROR,
-    payload: error,
   };
 }
 
@@ -96,7 +41,12 @@ export function addChild(newChild) {
 
     try {
       const response = await API.post("/api/nodes", newChild);
-      dispatch(createChildSuccess(newChild.parentId, response.data));
+      dispatch(
+        createChildSuccess({
+          parentId: newChild.parentId,
+          newChild: response.data,
+        })
+      );
     } catch (err) {
       if (err.response) {
         console.log("Error from server response", err.response.data.message);
@@ -109,59 +59,17 @@ export function addChild(newChild) {
   };
 }
 
-export const DELETE_NODE_SUCCESS = "DELETE_NODE_SUCCESS";
-export function deleteNodeSuccess(id, parentId) {
-  return {
-    type: DELETE_NODE_SUCCESS,
-    payload: {
-      id,
-      parentId,
-    },
-  };
-}
-
-export const DELETE_ROOT = "DELETE_ROOT";
-export function deleteRoot() {
-  return {
-    type: DELETE_ROOT,
-  };
-}
-
 export function destroyNode(id, parentId) {
   if (parentId !== null) {
     return async function (dispatch) {
       dispatch(loadData());
 
       await API.delete(`/api/nodes/${id}`);
-      dispatch(deleteNodeSuccess(id, parentId));
+      dispatch(deleteNodeSuccess({ id, parentId }));
     };
   } else {
     alert("Нельзя удалить корневой узел!");
-    return function (dispatch) {
-      dispatch(deleteRoot());
-    };
   }
-}
-
-export const EDIT_NODE_SUCCESS = "EDIT_NODE_SUCCESS";
-export function editNodeSuccess(id, newName, newIP, newPort) {
-  return {
-    type: EDIT_NODE_SUCCESS,
-    payload: {
-      id,
-      name: newName,
-      IP: newIP,
-      port: newPort,
-    },
-  };
-}
-
-export const EDIT_NODE_ERROR = "EDIT_NODE_ERROR";
-export function editNodeError(error) {
-  return {
-    type: EDIT_NODE_ERROR,
-    payload: error,
-  };
 }
 
 export function modifyNode(id, newData) {
@@ -170,7 +78,14 @@ export function modifyNode(id, newData) {
 
     try {
       await API.put(`/api/nodes/${id}`, newData);
-      dispatch(editNodeSuccess(id, newData.name, newData.IP, newData.port));
+      dispatch(
+        editNodeSuccess({
+          id,
+          name: newData.name,
+          IP: newData.IP,
+          port: newData.port,
+        })
+      );
     } catch (err) {
       if (err.response) {
         console.log("Error from server response", err.response.data.message);
@@ -179,54 +94,6 @@ export function modifyNode(id, newData) {
         console.log(err);
       }
     }
-  };
-}
-
-export const MOUSE_ENTER_NODE = "MOUSE_ENTER_NODE";
-export function mouseEnterNode(name) {
-  return {
-    type: MOUSE_ENTER_NODE,
-    payload: name,
-  };
-}
-
-export const MOUSE_LEAVE_NODE = "MOUSE_LEAVE_NODE";
-export function mouseLeaveNode() {
-  return {
-    type: MOUSE_LEAVE_NODE,
-  };
-}
-
-export const CHANGE_MODAL_INPUT = "CHANGE_MODAL_INPUT";
-export function changeModalInput(targetName, value) {
-  return {
-    type: CHANGE_MODAL_INPUT,
-    payload: {
-      targetName: targetName,
-      value: value,
-    },
-  };
-}
-
-export const RESET_MODAL_INPUT = "RESET_MODAL_INPUT";
-export function resetModalInput() {
-  return {
-    type: RESET_MODAL_INPUT,
-  };
-}
-
-export const SHOW_TREE = "SHOW_TREE";
-export function showTree() {
-  return {
-    type: SHOW_TREE,
-  };
-}
-
-export const SHOW_TABLE = "SHOW_TABLE";
-export function showTable(data) {
-  return {
-    type: SHOW_TABLE,
-    payload: data,
   };
 }
 
@@ -240,34 +107,5 @@ export function fetchAllNodes() {
     } catch (err) {
       console.log("Error with fetching all nodes", err);
     }
-  };
-}
-
-export const SORT_NODES = "SORT_NODES";
-export function sortNodes(key, isFilteredData) {
-  return {
-    type: SORT_NODES,
-    payload: {
-      key,
-      isFilteredData,
-    },
-  };
-}
-
-export const FILTER_NODES = "FILTER_NODES";
-export function filterNodes(key, value) {
-  return {
-    type: FILTER_NODES,
-    payload: {
-      key,
-      value,
-    },
-  };
-}
-
-export const RESET_FILTER = "RESET_FILTER";
-export function resetFilter() {
-  return {
-    type: RESET_FILTER,
   };
 }

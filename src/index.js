@@ -4,13 +4,13 @@ import { Provider } from "react-redux";
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import "./index.css";
-import App from "./containers/App";
-import form from "./reducers/form";
-import node from "./reducers/node";
-import properties from "./reducers/properties";
-import table from "./reducers/table";
-import validation from "./reducers/validation";
 import "./i18n";
+import App from "./containers/App";
+
+import propertiesReducer from "./store/properties";
+import nodeReducer from "./store/node";
+import formReducer from "./store/form";
+import tableReducer from "./store/table";
 
 const middleware = getDefaultMiddleware({
   immutableCheck: false,
@@ -19,7 +19,12 @@ const middleware = getDefaultMiddleware({
 });
 
 const store = configureStore({
-  reducer: { form, node, properties, table, validation },
+  reducer: {
+    form: formReducer,
+    node: nodeReducer,
+    properties: propertiesReducer,
+    table: tableReducer,
+  },
   middleware,
   devTools: process.env.NODE_ENV !== "production",
 });

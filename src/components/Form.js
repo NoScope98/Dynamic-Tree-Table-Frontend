@@ -6,12 +6,11 @@ const Form = ({
   onInputChange,
   onEditButtonClick,
   serverError,
-  isEditFormValid,
   formData,
   t,
 }) => {
   function handleChange(e) {
-    onInputChange(e.target.name, e.target.value);
+    onInputChange({ targetName: e.target.name, value: e.target.value });
   }
 
   function onSubmit(e) {
@@ -38,11 +37,8 @@ const Form = ({
         </div>
         <InputFields
           handleChange={handleChange}
-          inputNameValue={formData.name}
-          inputIPValue={formData.IP}
-          inputPortValue={formData.port}
           error={serverError}
-          isValid={isEditFormValid}
+          formData={formData}
         />
       </div>
 
@@ -55,9 +51,9 @@ const Form = ({
           disabled={
             (selectedNode ? (selectedNode.id ? false : true) : true) ||
             !(
-              isEditFormValid.isNameValid &&
-              isEditFormValid.isIPValid &&
-              isEditFormValid.isPortValid
+              formData.name.isValid &&
+              formData.IP.isValid &&
+              formData.port.isValid
             )
           }
         >

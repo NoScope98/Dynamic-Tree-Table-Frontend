@@ -24,7 +24,7 @@ const NodeTable = ({
   filteredData,
   onResetFilterButtonClick,
   filteredColumn,
-  t
+  t,
 }) => {
   const [isFirstRender, setIsFirstRender] = useState(true);
   const [isShownModal, setisShownModal] = useState(false);
@@ -50,10 +50,10 @@ const NodeTable = ({
                       <div
                         className="position-relative pr-4"
                         onClick={() => {
-                          onTitleColumnClick(
-                            keyObject,
-                            Boolean(filteredData.length)
-                          );
+                          onTitleColumnClick({
+                            key: keyObject,
+                            isFilteredData: Boolean(filteredData.length),
+                          });
                         }}
                       >
                         {keyObject}

@@ -1,22 +1,14 @@
 import { connect } from "react-redux";
 import NodeList from "../components/NodeList";
-import {
-  fetchChildren,
-  mouseEnterNode,
-  mouseLeaveNode,
-  selectedNode,
-  destroyNode,
-  addChild,
-  changeModalInput,
-  resetModalInput,
-} from "../actions/actions";
+import { fetchChildren, destroyNode, addChild } from "../actions/actions";
+import { selectedNode, changeModalInput, resetModalInput } from "../store/form";
+import { mouseEnterNode, mouseLeaveNode } from "../store/properties";
 
 const mapStateToProps = (store) => {
   return {
-    nodes: store.node,
+    nodes: store.node.tree,
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
-    isAddFormValid: store.validation.addForm,
     formData: store.form.addForm,
   };
 };

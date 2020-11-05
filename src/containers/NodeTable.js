@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { filterNodes, resetFilter, sortNodes } from "../actions/actions";
+import { filterNodes, resetFilter, sortNodes } from "../store/table";
 import NodeTable from "../components/NodeTable";
 
 const mapStateToProps = (store) => {

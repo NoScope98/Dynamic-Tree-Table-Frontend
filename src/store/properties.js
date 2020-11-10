@@ -15,7 +15,7 @@ const propertiesSlice = createSlice({
     isFetching: false,
     overNode: null,
     serverErrors: { add: "", edit: "" },
-    viewTree: false,
+    viewTree: true,
     selectedNode: {},
   },
   reducers: {

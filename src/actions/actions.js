@@ -28,7 +28,7 @@ export function fetchChildren(id) {
 
     try {
       const response = await API.get(`/api/nodes/${id}/children`);
-      dispatch(loadChildrenSuccess({ id, children: response.data }));
+      dispatch(loadChildrenSuccess(response.data));
     } catch (err) {
       console.log("Error with fetching root", err);
     }
@@ -41,12 +41,8 @@ export function addChild(newChild) {
 
     try {
       const response = await API.post("/api/nodes", newChild);
-      dispatch(
-        createChildSuccess({
-          parentId: newChild.parentId,
-          newChild: response.data,
-        })
-      );
+      console.log(response.data);
+      dispatch(createChildSuccess(response.data));
     } catch (err) {
       if (err.response) {
         console.log("Error from server response", err.response.data.message);
@@ -65,7 +61,7 @@ export function destroyNode(id, parentId) {
       dispatch(loadData());
 
       await API.delete(`/api/nodes/${id}`);
-      dispatch(deleteNodeSuccess({ id, parentId }));
+      dispatch(deleteNodeSuccess(id));
     };
   } else {
     alert("Нельзя удалить корневой узел!");

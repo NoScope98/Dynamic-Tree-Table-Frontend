@@ -4,9 +4,11 @@ import { fetchChildren, destroyNode, addChild } from "../actions/actions";
 import { selectedNode, changeModalInput, resetModalInput } from "../store/form";
 import { mouseEnterNode, mouseLeaveNode } from "../store/properties";
 
+import { getTreeFromNodes } from "../selectors/index";
+
 const mapStateToProps = (store) => {
   return {
-    nodes: store.node.tree,
+    nodes: getTreeFromNodes(store),
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
     formData: store.form.addForm,

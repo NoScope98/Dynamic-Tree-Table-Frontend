@@ -1,4 +1,5 @@
 import React from "react";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { Button, Modal } from "react-bootstrap";
 import InputFields from "./InputFields";
 
@@ -26,10 +27,11 @@ function AddModal({
     };
 
     try {
-      await onAddChildButtonClick({
+      const result = await onAddChildButtonClick({
         ...data,
         parentId: selectedParent.id,
       });
+      unwrapResult(result);
       close();
     } catch (err) {
       console.log("ERROR IN SUBMIT", err);

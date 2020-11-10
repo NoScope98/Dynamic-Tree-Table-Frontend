@@ -16,13 +16,13 @@ const Form = ({
   function onSubmit(e) {
     e.preventDefault();
 
-    const data = {
+    const newData = {
       name: e.target.name.value,
       IP: e.target.IP.value,
       port: Number(e.target.port.value),
     };
 
-    onEditButtonClick(selectedNode.id, data);
+    onEditButtonClick({ id: selectedNode.id, newData });
   }
 
   return (

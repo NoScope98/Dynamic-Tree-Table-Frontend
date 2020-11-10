@@ -1,4 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import API from "../api";
+
+export const fetchAllNodes = createAsyncThunk(
+  "table/fetchAllNodes",
+  async () => {
+    try {
+      const response = await API.get("/api/nodes/all");
+      return response.data;
+    } catch (err) {
+      console.log("Error with fetching all nodes", err);
+    }
+  }
+);
 
 const sortTreeNodes = (key, asc, data) => {
   const sortedArray = data.concat();
@@ -40,11 +53,6 @@ const tableSlice = createSlice({
     filteredColumn: "",
   },
   reducers: {
-    showTable: (state, action) => {
-      state.data = action.payload;
-      state.sortedKey.name = "";
-      state.sortedKey.asc = false;
-    },
     sortNodes: (state, action) => {
       if (!action.payload.isFilteredData) {
         state.data = sortTreeNodes(
@@ -79,13 +87,15 @@ const tableSlice = createSlice({
       state.filteredColumn = "";
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchAllNodes.fulfilled, (state, action) => {
+      state.data = action.payload;
+      state.sortedKey.name = "";
+      state.sortedKey.asc = false;
+    });
+  },
 });
 
-export const {
-  showTable,
-  sortNodes,
-  filterNodes,
-  resetFilter,
-} = tableSlice.actions;
+export const { sortNodes, filterNodes, resetFilter } = tableSlice.actions;
 
 export default tableSlice.reducer;

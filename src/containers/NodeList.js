@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
 import NodeList from "../components/NodeList";
-import { fetchChildren, destroyNode, addChild } from "../actions/actions";
 import { selectedNode, changeModalInput, resetModalInput } from "../store/form";
 import { mouseEnterNode, mouseLeaveNode } from "../store/properties";
+import { fetchChildren, destroyNode, addChild } from "../store/node";
 
 import { getTreeFromNodes } from "../selectors/index";
 

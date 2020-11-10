@@ -65,9 +65,7 @@ const NodeList = ({
               setParentForModal(nodes);
               setisShownModal(true);
             }}
-            onDeleteNodeButtonClick={() =>
-              onDeleteNodeButtonClick(nodes.id, nodes.parentId)
-            }
+            onDeleteNodeButtonClick={() => onDeleteNodeButtonClick(nodes.id)}
             node={nodes}
           />
         )}

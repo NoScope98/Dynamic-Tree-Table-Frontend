@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import Form from "../components/Form";
-import { modifyNode } from "../actions/actions";
+import { modifyNode } from "../store/node";
 import { changeInput } from "../store/form";
 
 const mapStateToProps = (store) => {

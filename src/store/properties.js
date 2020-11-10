@@ -1,13 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {
-  loadRootSuccess,
-  loadChildrenSuccess,
-  createChildSuccess,
-  deleteNodeSuccess,
-  editNodeSuccess,
-} from "./node";
+import { destroyNode, modifyNode, addChild } from "./node";
 import { selectedNode, changeInput, changeModalInput } from "./form";
-import { showTable } from "./table";
+import { fetchAllNodes } from "./table";
+
+const isPendingAction = (action) => action.type.endsWith("pending");
+const isFulfilledAction = (action) => action.type.endsWith("fulfilled");
+const isRejectedAction = (action) => action.type.endsWith("rejected");
 
 const propertiesSlice = createSlice({
   name: "properties",
@@ -26,10 +24,6 @@ const propertiesSlice = createSlice({
       state.isFetching = false;
       state.serverErrors.add = action.payload;
     },
-    editNodeError: (state, action) => {
-      state.isFetching = false;
-      state.serverErrors.edit = action.payload;
-    },
     mouseEnterNode: (state, action) => {
       state.overNode = action.payload;
     },
@@ -42,27 +36,21 @@ const propertiesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(loadRootSuccess, (state) => {
-        state.isFetching = false;
+      .addCase(addChild.rejected, (state, action) => {
+        state.serverErrors.add = action.payload;
+      })
+      .addCase(destroyNode.fulfilled, (state) => {
         state.selectedNode = {};
       })
-      .addCase(loadChildrenSuccess, (state) => {
-        state.isFetching = false;
+      .addCase(modifyNode.rejected, (state, action) => {
+        state.serverErrors.edit = action.payload;
       })
-      .addCase(createChildSuccess, (state) => {
-        state.isFetching = false;
-      })
-      .addCase(deleteNodeSuccess, (state) => {
-        state.isFetching = false;
-        state.selectedNode = {};
-      })
-      .addCase(editNodeSuccess, (state) => {
-        state.isFetching = false;
-      })
+
       .addCase(selectedNode, (state, action) => {
         state.selectedNode = action.payload;
         state.serverErrors.edit = "";
       })
+
       .addCase(changeInput, (state, action) => {
         if (action.payload.targetName === "name") {
           state.serverErrors.edit = "";
@@ -73,8 +61,18 @@ const propertiesSlice = createSlice({
           state.serverErrors.add = "";
         }
       })
-      .addCase(showTable, (state) => {
+
+      .addCase(fetchAllNodes.fulfilled, (state) => {
         state.viewTree = false;
+      })
+
+      .addMatcher(isPendingAction, (state) => {
+        state.isFetching = true;
+      })
+      .addMatcher(isFulfilledAction, (state) => {
+        state.isFetching = false;
+      })
+      .addMatcher(isRejectedAction, (state) => {
         state.isFetching = false;
       });
   },

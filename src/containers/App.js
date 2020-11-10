@@ -1,7 +1,8 @@
 import { connect } from "react-redux";
 import App from "../components/App";
-import { fetchRoot, fetchAllNodes } from "../actions/actions";
 import { showTree } from "../store/properties";
+import { fetchRoot } from "../store/node";
+import { fetchAllNodes } from "../store/table";
 
 const mapStateToProps = (store) => {
   return {

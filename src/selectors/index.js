@@ -1,14 +1,14 @@
 import { createSelector } from "reselect";
 import { buildTree } from "../lib/treeOperations";
 
-const getNodes = (store) => store.node.nodes;
+const getNodes = (state) => state;
 
 export const getTreeFromNodes = createSelector([getNodes], (nodes) => {
-  let root = nodes[0];
-  for (let i = 0; i < nodes.length; i++) {
-    for (let j = 1; j < nodes.length; j++) {
-      if (nodes[j].parentId === nodes[i].id) {
-        root = buildTree(root, nodes[i].id, nodes[j]);
+  let root = nodes[1];
+  for (let key1 in nodes) {
+    for (let key2 in nodes) {
+      if (nodes[key2].parentId === nodes[key1].id) {
+        root = buildTree(root, nodes[key1].id, nodes[key2]);
       }
     }
   }

@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  createEntityAdapter,
+} from "@reduxjs/toolkit";
 import API from "../api";
 
 export const fetchRoot = createAsyncThunk("node/fetchRoot", async () => {
@@ -65,41 +69,36 @@ export const destroyNode = createAsyncThunk("node/destroyNode", async (arg) => {
   }
 });
 
+const nodesAdapter = createEntityAdapter();
+
 const nodeSlice = createSlice({
   name: "node",
-  initialState: {
-    nodes: [],
-  },
+  initialState: nodesAdapter.getInitialState(),
   extraReducers: (builder) => {
     builder
       .addCase(fetchRoot.fulfilled, (state, action) => {
-        state.nodes.push({ ...action.payload, children: [] });
+        nodesAdapter.addOne(state, { ...action.payload, children: [] });
       })
       .addCase(fetchChildren.fulfilled, (state, action) => {
         for (let node of action.payload) {
-          if (state.nodes.findIndex((i) => i.name === node.name) === -1) {
-            state.nodes.push({ ...node, children: [] });
-          }
+          nodesAdapter.addOne(state, { ...node, children: [] });
         }
       })
       .addCase(addChild.fulfilled, (state, action) => {
-        state.nodes.push({ ...action.payload, children: [] });
+        nodesAdapter.addOne(state, { ...action.payload, children: [] });
       })
       .addCase(modifyNode.fulfilled, (state, action) => {
-        state.nodes = state.nodes.map((node) => {
-          if (node.id === action.payload.id) {
-            return {
-              ...node,
-              name: action.payload.newData.name,
-              IP: action.payload.newData.IP,
-              port: action.payload.newData.port,
-            };
-          }
-          return node;
+        nodesAdapter.updateOne(state, {
+          id: action.payload.id,
+          changes: {
+            name: action.payload.newData.name,
+            IP: action.payload.newData.IP,
+            port: action.payload.newData.port,
+          },
         });
       })
       .addCase(destroyNode.fulfilled, (state, action) => {
-        state.nodes = state.nodes.filter((node) => node.id !== action.payload);
+        nodesAdapter.removeOne(state, action.payload);
       });
   },
 });

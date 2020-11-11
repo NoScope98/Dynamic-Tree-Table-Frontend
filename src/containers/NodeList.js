@@ -8,7 +8,7 @@ import { getTreeFromNodes } from "../selectors/index";
 
 const mapStateToProps = (store) => {
   return {
-    nodes: getTreeFromNodes(store),
+    nodes: getTreeFromNodes(store.node.entities),
     overNode: store.properties.overNode,
     serverError: store.properties.serverErrors.add,
     formData: store.form.addForm,

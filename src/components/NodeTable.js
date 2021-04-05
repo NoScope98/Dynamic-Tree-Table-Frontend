@@ -37,87 +37,85 @@ const NodeTable = ({
     setIsFirstRender(false);
   }, [isFirstRender, setIsFirstRender, onShowTableButtonClick]);
 
-  return (
-    tableData.length && (
-      <>
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              {Object.keys(tableData[0]).map((keyObject, index) => {
-                return (
-                  <th className="border" scope="col" key={index}>
-                    <div className="d-flex justify-content-between">
+  return tableData && tableData.length ? (
+    <>
+      <table className="table table-hover">
+        <thead>
+          <tr>
+            {Object.keys(tableData[0]).map((keyObject, index) => {
+              return (
+                <th className="border" scope="col" key={index}>
+                  <div className="d-flex justify-content-between">
+                    <div
+                      className="position-relative pr-4"
+                      onClick={() => {
+                        onTitleColumnClick({
+                          key: keyObject,
+                          isFilteredData: Boolean(filteredData.length),
+                        });
+                      }}
+                    >
+                      {keyObject}
                       <div
-                        className="position-relative pr-4"
-                        onClick={() => {
-                          onTitleColumnClick({
-                            key: keyObject,
-                            isFilteredData: Boolean(filteredData.length),
-                          });
-                        }}
+                        className="position-absolute"
+                        style={styles.filterIcon}
                       >
-                        {keyObject}
-                        <div
-                          className="position-absolute"
-                          style={styles.filterIcon}
-                        >
-                          {sortedKey.name === keyObject ? (
-                            sortedKey.asc ? (
-                              <SortAscIcon />
-                            ) : (
-                              <SortDescIcon />
-                            )
-                          ) : null}
-                        </div>
-                      </div>
-                      <div>
-                        {filteredColumn === keyObject ? (
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary btn-sm"
-                            onClick={onResetFilterButtonClick}
-                          >
-                            <CancelIcon />
-                          </button>
-                        ) : (
-                          <button
-                            type="button"
-                            className="btn btn-outline-secondary btn-sm"
-                            onClick={() => {
-                              setisShownModal(true);
-                              setFilterColumn(keyObject);
-                            }}
-                          >
-                            <FilterIcon />
-                          </button>
-                        )}
+                        {sortedKey.name === keyObject ? (
+                          sortedKey.asc ? (
+                            <SortAscIcon />
+                          ) : (
+                            <SortDescIcon />
+                          )
+                        ) : null}
                       </div>
                     </div>
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
-          {filteredData.length ? (
-            <TableBody data={filteredData} />
-          ) : (
-            <TableBody data={tableData} />
-          )}
-        </table>
-        {isShownModal && (
-          <FilterModal
-            close={() => {
-              setisShownModal(false);
-            }}
-            isShown={isShownModal}
-            filterColumn={filterColumn}
-            onConfirmFilterButtonClick={onConfirmFilterButtonClick}
-            t={t}
-          />
+                    <div>
+                      {filteredColumn === keyObject ? (
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm"
+                          onClick={onResetFilterButtonClick}
+                        >
+                          <CancelIcon />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="btn btn-outline-secondary btn-sm"
+                          onClick={() => {
+                            setisShownModal(true);
+                            setFilterColumn(keyObject);
+                          }}
+                        >
+                          <FilterIcon />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        {filteredData.length ? (
+          <TableBody data={filteredData} />
+        ) : (
+          <TableBody data={tableData} />
         )}
-      </>
-    )
-  );
+      </table>
+      {isShownModal && (
+        <FilterModal
+          close={() => {
+            setisShownModal(false);
+          }}
+          isShown={isShownModal}
+          filterColumn={filterColumn}
+          onConfirmFilterButtonClick={onConfirmFilterButtonClick}
+          t={t}
+        />
+      )}
+    </>
+  ) : null;
 };
 
 export default NodeTable;

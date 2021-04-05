@@ -77,7 +77,8 @@ const nodeSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchRoot.fulfilled, (state, action) => {
-        nodesAdapter.addOne(state, { ...action.payload, children: [] });
+        if (action.payload)
+          nodesAdapter.addOne(state, { ...action.payload, children: [] });
       })
       .addCase(fetchChildren.fulfilled, (state, action) => {
         for (let node of action.payload) {
